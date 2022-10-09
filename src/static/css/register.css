@@ -1,0 +1,11 @@
+.register-form-container{
+    
+    color: white;
+    justify-content: center;
+    
+}
+
+.register-info{
+    display: flex;
+    flex-direction: column;
+}

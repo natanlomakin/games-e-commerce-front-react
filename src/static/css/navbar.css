@@ -10,6 +10,9 @@
     min-height: 100vh;
     max-width: 100%;
     background-image:url(https://wallpaperaccess.com/full/670557.jpg);
+    background-repeat: round;
+    position: sticky;
+    
   }
 
 nav{
@@ -67,7 +70,6 @@ button{
 .dropbtn {
     background-color: #ea1538;
     padding:5px 5px;
-    margin-left: 99%;
     font-size: 16px;
     border: none;
     cursor: pointer;

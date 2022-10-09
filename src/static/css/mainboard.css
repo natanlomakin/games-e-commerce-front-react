@@ -2,12 +2,14 @@
     max-width: 100%;
     display: block;
     border-radius: 2%;
+    
 }
 
 .mainBoardContainer{
     max-width: 100rem;
     margin-inline: auto;
     padding-inline: 2rem;
+    
 }
 
 .stacked{
@@ -21,10 +23,11 @@
     
 }
 
-.game-grid{
+.games-grid{
     display: grid;
     gap: .25rem .25rem;
-    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    
 }
 
 .card{
@@ -64,6 +67,12 @@ a:link{
     text-decoration: none;
 }
 
-.card:hover{
-    padding: .1rem;
+.card:hover .card__title {
+    color:white;
+    
 }
+
+.card:hover .card__content{
+    background: #ea1538;
+}
+

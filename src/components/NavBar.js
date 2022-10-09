@@ -28,10 +28,11 @@ const NavBar = () => {
             />
           </button>
           <div className="dropdown-content">
-            <NavLink>Profile</NavLink>
-            <NavLink>Login</NavLink>
-            <NavLink>Wishlist</NavLink>
-            <NavLink>Cart</NavLink>
+            <NavLink to="/profile">Profile</NavLink>
+            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/register">Register</NavLink>
+            <NavLink to="/wishlist">Wishlist</NavLink>
+            <NavLink to="/cart">Cart</NavLink>
           </div>
         </div>
         {/* <NavLink className="cartButton" to="/cart">
