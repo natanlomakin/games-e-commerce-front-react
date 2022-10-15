@@ -12,13 +12,45 @@ const Game = () => {
   useEffect(() => {
     const server_data = async () => {
       const result = await axios(SERVER_URL + "/game/singlegame/" + id);
-      console.log(result.data.imageOne);
+
       setGame(result.data);
       setFeturedImage(SERVER_URL + result.data.imageOne);
     };
     server_data();
   }, []);
-  console.log(feturedImage);
+
+  const addGameToCart = async (e) => {
+    console.log("Bearer " + localStorage.getItem("token"));
+    const result = await axios.post(
+      SERVER_URL + "/cart/addgametousercart/",
+      {
+        user: localStorage.getItem("user"),
+        game: String(game._id),
+      },
+      {
+        headers: { authorization: "Bearer " + localStorage.getItem("token") },
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }
+    );
+  };
+
+  const addGameToWishlist = async (e) => {
+    console.log("Bearer " + localStorage.getItem("token"));
+    const result = await axios.post(
+      SERVER_URL + "/wishlist/addtouserwishlist/",
+      {
+        user: localStorage.getItem("user"),
+        game: String(game._id),
+      },
+      {
+        headers: { authorization: "Bearer " + localStorage.getItem("token") },
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }
+    );
+  };
+
   return (
     <div className="game-container">
       <div className="game-images">
@@ -71,16 +103,22 @@ const Game = () => {
             consectetuer adipiscing elit, sed diam nonummy nibh euismod
             tincidunt ut laoreet dolore magna aliquam erat volutpat.
           </p>
-          <h4>Devloper : {game.developer}</h4>
-          <h4>Publisher : {game.publisher}</h4>
+          <h4>
+            <span>Devloper</span> : {game.developer}
+          </h4>
+          <h4>
+            <span>Publisher</span> : {game.publisher}
+          </h4>
 
-          <h4>Platform : {game.platform}</h4>
+          <h4>
+            <span>Platform</span> : {game.platform}
+          </h4>
           <div>
-            <button>
+            <button onClick={addGameToCart}>
               Add to cart
               <i className="material-icons">add</i>
             </button>
-            <button>
+            <button onClick={addGameToWishlist}>
               Add to wishlist <i className="material-icons">add</i>
             </button>
           </div>

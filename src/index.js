@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import MainBoard from "./components/MainBoard";
 import Game from "./components/Game";
 import Register from "./components/Register";
+import Login from "./components/Login";
+import AuthContext from "./context/AuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,7 +15,8 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route path="/register" element={<Register />}></Route>
+          <Route path="/register" AuthContext element={<Register />}></Route>
+          <Route path="/login" AuthContext element={<Login />}></Route>
           <Route path="/mainboard" element={<MainBoard />}></Route>
           <Route path="/game/:id" element={<Game />}></Route>
         </Route>
