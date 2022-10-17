@@ -8,6 +8,7 @@ import Game from "./components/Game";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import AuthContext from "./context/AuthContext";
+import Cart from "./components/Cart";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -19,6 +20,7 @@ root.render(
           <Route path="/login" AuthContext element={<Login />}></Route>
           <Route path="/mainboard" element={<MainBoard />}></Route>
           <Route path="/game/:id" element={<Game />}></Route>
+          <Route path="/cart" AuthContext element={<Cart/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

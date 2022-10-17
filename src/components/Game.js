@@ -8,6 +8,13 @@ const Game = () => {
   const [game, setGame] = useState("");
   const { id } = useParams();
   const [feturedImage, setFeturedImage] = useState("");
+  const [cartButtonContent, setCartButtonContent] = useState("Add to cart");
+  const [cartButtonState, setcartButtonState] = useState("game-cart-button");
+  const [wishlistButtonContent, setWishlistButtonContent] =
+    useState("Add to wishlist");
+  const [wishlistButtonState, setWishlistButtonState] = useState(
+    "game-wishlist-button"
+  );
 
   useEffect(() => {
     const server_data = async () => {
@@ -19,7 +26,26 @@ const Game = () => {
     server_data();
   }, []);
 
-  const addGameToCart = async (e) => {
+  const isGameInCart = async () => {
+    const result = await axios(SERVER_URL + "/cart/getusercartgames/", {
+      headers: { authorization: "Bearer " + localStorage.getItem("token") },
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    });
+    console.log(result.data);
+    for (let i = 0; i < result.data.length; i++) {
+      if (result.data[i].game === game._id) {
+        console.log("Game allredy in cart");
+        setCartButtonContent("Game allredy in cart");
+        setcartButtonState("game-cart-button-block");
+        return;
+      }
+    }
+    console.log("test");
+    addGameToCart();
+  };
+
+  const addGameToCart = async () => {
     console.log("Bearer " + localStorage.getItem("token"));
     const result = await axios.post(
       SERVER_URL + "/cart/addgametousercart/",
@@ -33,6 +59,25 @@ const Game = () => {
         "Content-Type": "application/json",
       }
     );
+  };
+
+  const isGameInWishlist = async () => {
+    const result = await axios(SERVER_URL + "/wishlist/getuserwishlist/", {
+      headers: { authorization: "Bearer " + localStorage.getItem("token") },
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    });
+    console.log(result.data[0].game);
+    for (let i = 0; i < result.data.length; i++) {
+      if (result.data[i].game === game._id) {
+        console.log("Game allredy in wishlist");
+        setWishlistButtonContent("Game allredy in wishlist");
+        setWishlistButtonState("game-wishlist-button-block");
+        return;
+      }
+    }
+    console.log("test");
+    addGameToWishlist();
   };
 
   const addGameToWishlist = async (e) => {
@@ -114,12 +159,13 @@ const Game = () => {
             <span>Platform</span> : {game.platform}
           </h4>
           <div>
-            <button onClick={addGameToCart}>
-              Add to cart
-              <i className="material-icons">add</i>
+            <button className={cartButtonState} onClick={isGameInCart}>
+              {cartButtonContent}
+              {/* <i className="material-icons">add</i> */}
             </button>
-            <button onClick={addGameToWishlist}>
-              Add to wishlist <i className="material-icons">add</i>
+            <button className={wishlistButtonState} onClick={isGameInWishlist}>
+              {wishlistButtonContent}{" "}
+              {/* <i className="material-icons">add</i> */}
             </button>
           </div>
         </div>

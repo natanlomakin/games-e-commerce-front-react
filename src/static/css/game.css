@@ -58,6 +58,24 @@
     gap: .25rem ;
     
 }
+.game-cart-button-block{
+    pointer-events: none;
+    color: black;
+}
+
+.game-cart-button:hover{
+    background-color: #50030f ;
+}
+
+.game-wishlist-button-block{
+    pointer-events: none;
+    color: black;
+}
+
+.game-wishlist-button:hover{
+    background-color: #50030f ;
+}
+
 
 .game-caruosel-images{
     aspect-ratio: 2 / 1;
