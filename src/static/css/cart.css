@@ -1,22 +1,29 @@
+.cart-header{
+    color: white;
+    text-align: center;
+    padding-top: 3rem;
+}
+
 .cart-container{
-    
-    
     display: flex;
-    
+    column-gap: 3rem;
     
     
 }
 
 .cart-game-card{
-    background: rgba(87, 1, 1, 0.137);
+    background: rgba(61, 50, 50, 0.493);
     max-width: 100%;
     padding: 2rem;
     padding-left: 3rem;
-    margin: .25rem;
+    margin: 1rem;
     color: white;
     display: flex;
     flex-direction: row;
-    
+    border-radius: 15px;
+    border-style: solid;
+    border-color: #ea1538;
+    column-gap: 6rem;
 }
 
 .cart-game-title{
@@ -32,21 +39,18 @@
 
 .cart-game-image{
     object-fit: cover;
-    max-width: 12%;
+    max-width: 20%;
     flex: 20%;
     aspect-ratio: 1 / 1;
 }
 
-.cart-game-information{
-    
-    padding-left: 2rem;
-}
+
 
 .cart-game{
     
     display: flex;
     flex: 60%;
-    padding-top: 2rem;
+    
     flex-flow:  column;
     justify-content: center;
     
@@ -60,7 +64,30 @@
     flex: 40%;
     flex-flow:  column;
     padding-top: 3rem;
-    
-    
-    background: rgba(87, 1, 1, 0.137);
+    align-items: center;
+    row-gap: 3rem;
+}
+
+@media (max-width: 800px){
+    .cart-game{
+        flex: 100%;
+    }
+
+    .cart-order-information{
+        flex: 100%;
+        
+    }
+
+    .cart-container{
+        flex-flow: column;
+        align-items: center;
+    }
+
+    .cart-game-image{
+        max-width: 40%;
+    }
+
+    .cart-game-card{
+        column-gap: 2rem;
+    }
 }

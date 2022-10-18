@@ -61,6 +61,10 @@ button{
     transition: .4s;
 }
 
+button:hover{
+  background-color: #50030f;
+}
+
 .profilePic{
     width: 60px;
     border-radius: 40px;

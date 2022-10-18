@@ -63,18 +63,14 @@
     color: black;
 }
 
-.game-cart-button:hover{
-    background-color: #50030f ;
-}
+
 
 .game-wishlist-button-block{
     pointer-events: none;
     color: black;
 }
 
-.game-wishlist-button:hover{
-    background-color: #50030f ;
-}
+
 
 
 .game-caruosel-images{
@@ -97,11 +93,9 @@
     }
     .game-information{
         flex: 100%;
+        padding-top: 0;
     }
     .game-container{
         flex-flow: column;
-    }
-    .game-information{
-        padding-top: 0;
     }
 }
