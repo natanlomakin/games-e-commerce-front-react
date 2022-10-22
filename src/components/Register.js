@@ -19,6 +19,7 @@ const Register = () => {
       email: email,
       password: password,
     });
+    window.location.href = "/";
     return response;
   };
 

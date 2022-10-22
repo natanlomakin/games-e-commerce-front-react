@@ -1,5 +1,5 @@
 .register-form-container{
-    color: white;
+    color: #f2f5ea;
     justify-content: center;
     display: flex;
     padding-top: 5rem;
@@ -9,7 +9,7 @@
     padding: 3rem;
     border-style: solid;
     border-style: ridge;
-    border-color: #ea1538;
+    border-color: #ed1c24;
 }
 
 .register-info form > *{
@@ -17,11 +17,11 @@
 }
 
 input{
-    background-color: white;
+    background-color: #f2f5ea;
     height: 2rem;
     font-size: large;
     font-weight: bolder;
-    color: #ea1538;
+    color: #ed1c24;
 }
 
 @media (max-width: 800px) {

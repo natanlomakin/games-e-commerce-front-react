@@ -28,9 +28,9 @@
 }
 
 .game-details >*{
-    
+    margin: 0.25rem;
     padding: .5rem;
-    color: white;
+    color: #f2f5ea;
 }
 
 .game-information{
@@ -43,7 +43,7 @@
 .game-specs >*{
 
     padding: .5rem;
-    color: white;
+    color: #f2f5ea;
     
     
 }
@@ -51,9 +51,9 @@
 .game-caruosel{
     
     display: flex;
-    flex-wrap: nowrap;
+    
     max-width: 20%;
-    align-items: baseline;
+    
     
     gap: .25rem ;
     
@@ -78,15 +78,22 @@
     object-fit: cover;
     max-width: 100%;
     border-radius: 2%;
-    
 }
 
 .game-caruosel-images:hover{
-    border-color: #ea1538;
+    border-color: #ed1c24;
     border-style: double;
 }
 
-@media (max-width: 800px) {
+.modal{
+    
+    margin: 10px;
+    
+    color: #f2f5ea;
+    font-weight: bold;
+}
+
+@media (max-width: 850px) {
     .game-images {
       flex: 100%;
       padding: 1rem;

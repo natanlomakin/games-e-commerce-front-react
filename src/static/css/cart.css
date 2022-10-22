@@ -1,5 +1,5 @@
 .cart-header{
-    color: white;
+    color: #f2f5ea;
     text-align: center;
     padding-top: 3rem;
 }
@@ -7,29 +7,31 @@
 .cart-container{
     display: flex;
     column-gap: 3rem;
-    
+    align-items: center;
     
 }
 
 .cart-game-card{
     background: rgba(61, 50, 50, 0.493);
-    max-width: 100%;
+    max-width: 50rem;
     padding: 2rem;
     padding-left: 3rem;
     margin: 1rem;
-    color: white;
+    color: #f2f5ea;
     display: flex;
     flex-direction: row;
-    border-radius: 15px;
+    border-radius: .5rem;
     border-style: solid;
-    border-color: #ea1538;
+    border-color: #ed1c24;
     column-gap: 6rem;
 }
 
 .cart-game-title{
     padding: .25rem ;
-    
-   
+}
+
+.cart-game-link{
+    color: #f2f5ea;
 }
 
 .cart-game-price{
@@ -42,24 +44,20 @@
     max-width: 20%;
     flex: 20%;
     aspect-ratio: 1 / 1;
+    border-radius: 10%;
 }
 
 
 
 .cart-game{
-    
     display: flex;
     flex: 60%;
-    
     flex-flow:  column;
-    justify-content: center;
-    
-    
-    
+    align-items: center;
 }
 
 .cart-order-information{
-    color: white;
+    color: #f2f5ea;
     display: flex;
     flex: 40%;
     flex-flow:  column;

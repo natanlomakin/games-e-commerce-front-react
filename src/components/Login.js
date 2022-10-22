@@ -11,9 +11,6 @@ const Login = () => {
 
   let navigate = useNavigate();
 
-
-
-
   const loginHandle = async (e) => {
     e.preventDefault();
     let result = await axios

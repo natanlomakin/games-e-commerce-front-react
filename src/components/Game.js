@@ -15,6 +15,7 @@ const Game = () => {
   const [wishlistButtonState, setWishlistButtonState] = useState(
     "game-wishlist-button"
   );
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     const server_data = async () => {
@@ -59,6 +60,8 @@ const Game = () => {
         "Content-Type": "application/json",
       }
     );
+    setModal(true);
+    console.log(modal + "modal");
   };
 
   const isGameInWishlist = async () => {
@@ -67,7 +70,7 @@ const Game = () => {
       Accept: "application/json",
       "Content-Type": "application/json",
     });
-    console.log(result.data[0].game);
+    console.log(result.data);
     for (let i = 0; i < result.data.length; i++) {
       if (result.data[i].game === game._id) {
         console.log("Game allredy in wishlist");
@@ -80,7 +83,7 @@ const Game = () => {
     addGameToWishlist();
   };
 
-  const addGameToWishlist = async (e) => {
+  const addGameToWishlist = async () => {
     console.log("Bearer " + localStorage.getItem("token"));
     const result = await axios.post(
       SERVER_URL + "/wishlist/addtouserwishlist/",
@@ -94,6 +97,10 @@ const Game = () => {
         "Content-Type": "application/json",
       }
     );
+  };
+
+  const toggleModal = () => {
+    setModal(!modal);
   };
 
   return (
@@ -159,10 +166,24 @@ const Game = () => {
             <span>Platform</span> : {game.platform}
           </h4>
           <div>
+            {modal && (
+              <div className="modal">
+                <div className="modal-content">
+                  Game succesfully added to your cart
+                  <i
+                    type="button"
+                    className="material-icons"
+                    onClick={toggleModal}
+                  >
+                    close
+                  </i>
+                </div>
+              </div>
+            )}
             <button className={cartButtonState} onClick={isGameInCart}>
               {cartButtonContent}
               {/* <i className="material-icons">add</i> */}
-            </button>
+            </button>{" "}
             <button className={wishlistButtonState} onClick={isGameInWishlist}>
               {wishlistButtonContent}{" "}
               {/* <i className="material-icons">add</i> */}

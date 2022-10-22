@@ -4,48 +4,46 @@ import { SERVER_URL } from "../utils/serverUtil";
 import "../static/css/cart.css";
 import { NavLink } from "react-router-dom";
 
-const Cart = () => {
-  const [cartDetails, setCartDetails] = useState([]);
-  const [cartGameDetails, setCartGameDetails] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0.0);
-  const [iscartUpdated, setIscartUpdated] = useState(false);
+const Wishlist = () => {
+  const [wishlistDetails, setWishlistDetails] = useState([]);
+  const [wishlistGameDetails, setWishlistGameDetails] = useState([]);
+  const [isWishlistUpdated, setIsWishlistUpdated] = useState(false);
 
   useEffect(() => {
-    setTotalPrice(0.0);
-    const cartData = async () => {
-      const resultCart = await axios(SERVER_URL + "/cart/getusercartgames/", {
+    setIsWishlistUpdated(false);
+    const wishlistData = async () => {
+      const result = await axios(SERVER_URL + "/wishlist/getuserwishlist/", {
         headers: { authorization: "Bearer " + localStorage.getItem("token") },
         Accept: "application/json",
         "Content-Type": "application/json",
       });
-      setCartDetails(resultCart.data);
+      setWishlistDetails(result.data);
     };
-    cartData();
-  }, [iscartUpdated]);
+    wishlistData();
+  }, [isWishlistUpdated]);
 
   useEffect(() => {
-    setIscartUpdated(false);
-    let total = 0.0;
-    const resultGame = [];
+    setIsWishlistUpdated(false);
+    const result = [];
     const gameData = async () => {
-      for (let i = 0; i < cartDetails.length; i++) {
-        resultGame.push(
-          (await axios(SERVER_URL + "/game/singlegame/" + cartDetails[i].game))
-            .data
+      for (let i = 0; i < wishlistDetails.length; i++) {
+        result.push(
+          (
+            await axios(
+              SERVER_URL + "/game/singlegame/" + wishlistDetails[i].game
+            )
+          ).data
         );
-        total = total + Number(resultGame[i].price);
-        setTotalPrice(total);
       }
-      setCartGameDetails(resultGame);
+      setWishlistGameDetails(result);
     };
-
     gameData();
-  }, [cartDetails]);
+  }, [wishlistDetails]);
 
-  const removeGameFromCart = async (e) => {
+  const removeGameFromWishlist = async (e) => {
     console.log(e.target);
     const result = await axios.delete(
-      SERVER_URL + "/cart/deletefromcart/" + e.target.value,
+      SERVER_URL + "/wishlist/deltefromuserwishlist/" + e.target.value,
       {
         headers: { authorization: "Bearer " + localStorage.getItem("token") },
         Accept: "application/json",
@@ -53,15 +51,15 @@ const Cart = () => {
       }
     );
     /* window.location.reload(); */
-    setIscartUpdated(true);
+    setIsWishlistUpdated(true);
   };
 
   return (
     <div>
-      <h1 className="cart-header">My Cart</h1>
+      <h1 className="cart-header">My Wishlist</h1>
       <div className="cart-container">
         <div className="cart-game">
-          {cartGameDetails.map((gameDetails, ind) => (
+          {wishlistGameDetails.map((gameDetails, ind) => (
             <div key={ind} className="cart-game-card">
               <img
                 className="cart-game-image"
@@ -82,25 +80,19 @@ const Cart = () => {
                     <i className="material-icons">attach_money</i>
                   </h3>
                 </div>
-                <button value={gameDetails._id} onClick={removeGameFromCart}>
+                <button
+                  value={gameDetails._id}
+                  onClick={removeGameFromWishlist}
+                >
                   Remove
                 </button>
               </div>
             </div>
           ))}
         </div>
-        <div className="cart-order-information">
-          <h2>Summery</h2>
-          <h3>
-            <span>Total: </span>
-            {totalPrice}
-            <i className="material-icons">attach_money</i>
-          </h3>
-          <button>CHECK OUT</button>
-        </div>
       </div>
     </div>
   );
 };
 
-export default Cart;
+export default Wishlist;

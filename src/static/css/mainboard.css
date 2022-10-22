@@ -37,7 +37,7 @@
 }
 
 .card__content{
-    background: white;
+    background: #f2f5ea;
     align-self: end;
     margin: .5rem .5rem 2rem;
     padding: .5rem;
@@ -46,7 +46,7 @@
 }
 
 .card__title{
-    color: #ea1538;
+    color: #ed1c24;
     padding: .1rem ;
     text-align: center;
 }
@@ -68,11 +68,17 @@ a:link{
 }
 
 .card:hover .card__title {
-    color:white;
+    color:#f2f5ea;
     
 }
 
 .card:hover .card__content{
-    background: #ea1538;
+    background: #ed1c24;
 }
 
+@media (max-width: 500px) {
+    .games-grid{
+        display: flex;
+        flex-direction: column;
+    }
+}

@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import "../static/css/navbar.css";
 import AuthContext from "../context/AuthContext";
+import axios from "axios";
+import { SERVER_URL } from "../utils/serverUtil";
 
 const NavBar = () => {
   /* const isAuthenticated = localStorage.getItem("token"); */
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [LoggedInDisplay, setLoggedInDisplay] = useState(null);
+  const [profilePicture, setProfilePicture] = useState("");
 
   const logoutHandle = () => {
     localStorage.removeItem("token");
@@ -16,6 +19,26 @@ const NavBar = () => {
 
   useEffect(() => {
     setIsAuthenticated(localStorage.getItem("token"));
+    const userProfile = async () => {
+      const result = await axios(SERVER_URL + "/userprofile/getuserprofile/", {
+        headers: { authorization: "Bearer " + localStorage.getItem("token") },
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }).catch(
+        setProfilePicture(
+          "https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png"
+        )
+      );
+      console.log(result.data.profilePicture);
+      setProfilePicture(SERVER_URL + result.data.profilePicture);
+    };
+    if (localStorage.getItem("token")) {
+      userProfile();
+    } else {
+      setProfilePicture(
+        "https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png"
+      );
+    }
   }, [isAuthenticated]);
 
   const displayByLoginStatus = () => {
@@ -28,10 +51,10 @@ const NavBar = () => {
             </h2>
             <ul>
               <li>
-                <NavLink to="/mainboard">Home</NavLink>
+                <NavLink to="/">Home</NavLink>
               </li>
               <li>
-                <NavLink>About</NavLink>
+                <NavLink to="/mainboard">Store</NavLink>
               </li>
               <li>
                 <NavLink>Service</NavLink>
@@ -39,11 +62,7 @@ const NavBar = () => {
             </ul>
             <div className="dropdown">
               <button className="dropbtn">
-                <img
-                  src="https://picsum.photos/seed/picsum/200"
-                  className="profilePic"
-                  alt="..."
-                />
+                <img src={profilePicture} className="profilePic" alt="..." />
               </button>
               <div className="dropdown-content">
                 <NavLink to="/profile">Profile</NavLink>
@@ -70,10 +89,10 @@ const NavBar = () => {
             </h2>
             <ul>
               <li>
-                <NavLink to="/mainboard">Home</NavLink>
+                <NavLink to="/">Home</NavLink>
               </li>
               <li>
-                <NavLink>About</NavLink>
+                <NavLink to="/mainboard">Store</NavLink>
               </li>
               <li>
                 <NavLink>Service</NavLink>
@@ -81,11 +100,7 @@ const NavBar = () => {
             </ul>
             <div className="dropdown">
               <button className="dropbtn">
-                <img
-                  src="https://picsum.photos/seed/picsum/200"
-                  className="profilePic"
-                  alt="..."
-                />
+                <img src={profilePicture} className="profilePic" alt="..." />
               </button>
               <div className="dropdown-content">
                 <NavLink to="/profile">Profile</NavLink>

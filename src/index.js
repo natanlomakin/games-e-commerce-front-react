@@ -9,6 +9,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import AuthContext from "./context/AuthContext";
 import Cart from "./components/Cart";
+import Wishlist from "./components/Wishlist";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -20,7 +21,8 @@ root.render(
           <Route path="/login" AuthContext element={<Login />}></Route>
           <Route path="/mainboard" element={<MainBoard />}></Route>
           <Route path="/game/:id" element={<Game />}></Route>
-          <Route path="/cart" AuthContext element={<Cart/>}></Route>
+          <Route path="/cart" AuthContext element={<Cart />}></Route>
+          <Route path="/wishlist" AuthContext element={<Wishlist />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
