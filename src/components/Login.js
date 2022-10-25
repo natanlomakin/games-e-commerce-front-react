@@ -23,8 +23,9 @@ const Login = () => {
         { "Content-Type": "application/json" }
       )
       .then((response) => {
-        console.log(response);
-        localStorage.setItem("token", response.data.access);
+        console.log(response.data);
+        localStorage.setItem("access-token", response.data.access);
+        localStorage.setItem("refresh-token", response.data.refresh);
         localStorage.setItem("user", parseJwt(response.data.access).user_id);
         window.location.href = "/mainboard";
       });

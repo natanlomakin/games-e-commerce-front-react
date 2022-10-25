@@ -12,16 +12,17 @@ const NavBar = () => {
   const [profilePicture, setProfilePicture] = useState("");
 
   const logoutHandle = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("access-token");
+    localStorage.removeItem("refresh-token");
     localStorage.removeItem("user");
     setIsAuthenticated(null);
   };
 
   useEffect(() => {
-    setIsAuthenticated(localStorage.getItem("token"));
+    setIsAuthenticated(localStorage.getItem("access-token"));
     const userProfile = async () => {
       const result = await axios(SERVER_URL + "/userprofile/getuserprofile/", {
-        headers: { authorization: "Bearer " + localStorage.getItem("token") },
+        headers: { authorization: "Bearer " + localStorage.getItem("access-token") },
         Accept: "application/json",
         "Content-Type": "application/json",
       }).catch(
@@ -32,7 +33,7 @@ const NavBar = () => {
       console.log(result.data.profilePicture);
       setProfilePicture(SERVER_URL + result.data.profilePicture);
     };
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem("access-token")) {
       userProfile();
     } else {
       setProfilePicture(

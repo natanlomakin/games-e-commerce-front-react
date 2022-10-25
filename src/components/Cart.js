@@ -14,7 +14,9 @@ const Cart = () => {
     setTotalPrice(0.0);
     const cartData = async () => {
       const resultCart = await axios(SERVER_URL + "/cart/getusercartgames/", {
-        headers: { authorization: "Bearer " + localStorage.getItem("token") },
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("access-token"),
+        },
         Accept: "application/json",
         "Content-Type": "application/json",
       });
@@ -47,13 +49,34 @@ const Cart = () => {
     const result = await axios.delete(
       SERVER_URL + "/cart/deletefromcart/" + e.target.value,
       {
-        headers: { authorization: "Bearer " + localStorage.getItem("token") },
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("access-token"),
+        },
         Accept: "application/json",
         "Content-Type": "application/json",
       }
     );
     /* window.location.reload(); */
     setIscartUpdated(true);
+  };
+
+  const moveGameToWishlist = async (e) => {
+    const result = await axios
+      .post(
+        SERVER_URL + "/wishlist/addtouserwishlist/",
+        {
+          user: localStorage.getItem("user"),
+          game: e.target.value,
+        },
+        {
+          headers: {
+            authorization: "Bearer " + localStorage.getItem("access-token"),
+          },
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        }
+      )
+      .then(removeGameFromCart(e));
   };
 
   return (
@@ -82,8 +105,15 @@ const Cart = () => {
                     <i className="material-icons">attach_money</i>
                   </h3>
                 </div>
-                <button value={gameDetails._id} onClick={removeGameFromCart}>
+                <button
+                  className="remove-btn"
+                  value={gameDetails._id}
+                  onClick={removeGameFromCart}
+                >
                   Remove
+                </button>
+                <button value={gameDetails._id} onClick={moveGameToWishlist}>
+                  Move to wishlist
                 </button>
               </div>
             </div>

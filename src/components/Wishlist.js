@@ -13,7 +13,9 @@ const Wishlist = () => {
     setIsWishlistUpdated(false);
     const wishlistData = async () => {
       const result = await axios(SERVER_URL + "/wishlist/getuserwishlist/", {
-        headers: { authorization: "Bearer " + localStorage.getItem("token") },
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("access-token"),
+        },
         Accept: "application/json",
         "Content-Type": "application/json",
       });
@@ -45,13 +47,34 @@ const Wishlist = () => {
     const result = await axios.delete(
       SERVER_URL + "/wishlist/deltefromuserwishlist/" + e.target.value,
       {
-        headers: { authorization: "Bearer " + localStorage.getItem("token") },
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("access-token"),
+        },
         Accept: "application/json",
         "Content-Type": "application/json",
       }
     );
     /* window.location.reload(); */
     setIsWishlistUpdated(true);
+  };
+
+  const moveGameToCart = async (e) => {
+    const result = await axios
+      .post(
+        SERVER_URL + "/cart/addgametousercart/",
+        {
+          user: localStorage.getItem("user"),
+          game: e.target.value,
+        },
+        {
+          headers: {
+            authorization: "Bearer " + localStorage.getItem("access-token"),
+          },
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        }
+      )
+      .then(removeGameFromWishlist(e));
   };
 
   return (
@@ -81,10 +104,14 @@ const Wishlist = () => {
                   </h3>
                 </div>
                 <button
+                  className="remove-btn"
                   value={gameDetails._id}
                   onClick={removeGameFromWishlist}
                 >
                   Remove
+                </button>{" "}
+                <button value={gameDetails._id} onClick={moveGameToCart}>
+                  Add to cart
                 </button>
               </div>
             </div>

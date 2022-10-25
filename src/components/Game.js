@@ -15,7 +15,8 @@ const Game = () => {
   const [wishlistButtonState, setWishlistButtonState] = useState(
     "game-wishlist-button"
   );
-  const [modal, setModal] = useState(false);
+  const [cartModal, setCartModal] = useState(false);
+  const [wishlistModal, setWishlistModal] = useState(false);
 
   useEffect(() => {
     const server_data = async () => {
@@ -29,11 +30,17 @@ const Game = () => {
 
   const isGameInCart = async () => {
     const result = await axios(SERVER_URL + "/cart/getusercartgames/", {
-      headers: { authorization: "Bearer " + localStorage.getItem("token") },
+      headers: {
+        authorization: "Bearer " + localStorage.getItem("access-token"),
+      },
       Accept: "application/json",
       "Content-Type": "application/json",
+    }).catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data);
+      }
     });
-    console.log(result.data);
+
     for (let i = 0; i < result.data.length; i++) {
       if (result.data[i].game === game._id) {
         console.log("Game allredy in cart");
@@ -47,7 +54,7 @@ const Game = () => {
   };
 
   const addGameToCart = async () => {
-    console.log("Bearer " + localStorage.getItem("token"));
+    console.log("Bearer " + localStorage.getItem("access-token"));
     const result = await axios.post(
       SERVER_URL + "/cart/addgametousercart/",
       {
@@ -55,18 +62,22 @@ const Game = () => {
         game: String(game._id),
       },
       {
-        headers: { authorization: "Bearer " + localStorage.getItem("token") },
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("access-token"),
+        },
         Accept: "application/json",
         "Content-Type": "application/json",
       }
     );
-    setModal(true);
-    console.log(modal + "modal");
+    console.log(result);
+    setCartModal(true);
   };
 
   const isGameInWishlist = async () => {
     const result = await axios(SERVER_URL + "/wishlist/getuserwishlist/", {
-      headers: { authorization: "Bearer " + localStorage.getItem("token") },
+      headers: {
+        authorization: "Bearer " + localStorage.getItem("access-token"),
+      },
       Accept: "application/json",
       "Content-Type": "application/json",
     });
@@ -84,7 +95,7 @@ const Game = () => {
   };
 
   const addGameToWishlist = async () => {
-    console.log("Bearer " + localStorage.getItem("token"));
+    console.log("Bearer " + localStorage.getItem("access-token"));
     const result = await axios.post(
       SERVER_URL + "/wishlist/addtouserwishlist/",
       {
@@ -92,15 +103,22 @@ const Game = () => {
         game: String(game._id),
       },
       {
-        headers: { authorization: "Bearer " + localStorage.getItem("token") },
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("access-token"),
+        },
         Accept: "application/json",
         "Content-Type": "application/json",
       }
     );
+    setWishlistModal(true);
   };
 
-  const toggleModal = () => {
-    setModal(!modal);
+  const toggleCartModal = () => {
+    setCartModal(!cartModal);
+  };
+
+  const toggleWishlistModal = () => {
+    setWishlistModal(!wishlistModal);
   };
 
   return (
@@ -165,15 +183,32 @@ const Game = () => {
           <h4>
             <span>Platform</span> : {game.platform}
           </h4>
+          <h4>
+            <span>Genre</span> : {game.genre}
+          </h4>
           <div>
-            {modal && (
+            {cartModal && (
               <div className="modal">
                 <div className="modal-content">
-                  Game succesfully added to your cart
+                  Game succesfully added to cart
                   <i
                     type="button"
                     className="material-icons"
-                    onClick={toggleModal}
+                    onClick={toggleCartModal}
+                  >
+                    close
+                  </i>
+                </div>
+              </div>
+            )}
+            {wishlistModal && (
+              <div className="modal">
+                <div className="modal-content">
+                  Game succesfully added to wishlist
+                  <i
+                    type="button"
+                    className="material-icons"
+                    onClick={toggleWishlistModal}
                   >
                     close
                   </i>
@@ -193,13 +228,21 @@ const Game = () => {
 
         <div className="game-specs">
           <h2>Specifications</h2>
-          <h4>OS:</h4>
+          <h4>
+            <span>OS:</span>
+          </h4>
           <p>{game.osVersion}</p>
-          <h4>CPU:</h4>
+          <h4>
+            <span>CPU:</span>
+          </h4>
           <p>{game.cpu}</p>
-          <h4>GPU:</h4>
+          <h4>
+            <span>GPU:</span>
+          </h4>
           <p>{game.gpu}</p>
-          <h4>Memory:</h4>
+          <h4>
+            <span>Memory:</span>
+          </h4>
           <p>{game.memory}</p>
         </div>
       </div>

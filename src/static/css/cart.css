@@ -20,9 +20,16 @@
     color: #f2f5ea;
     display: flex;
     flex-direction: row;
-    border-radius: .5rem;
+    /* border-radius: .5rem;
     border-style: solid;
-    border-color: #ed1c24;
+    border-color: #ed1c24; */
+    border-radius: .5rem;
+    border-inline-start: .2rem solid;
+    border-block-start: .2rem solid;
+    border-image-source:
+    radial-gradient(circle at top left, #ed1c24,transparent 80%);
+    border-image-slice: 1;
+    
     column-gap: 6rem;
 }
 
@@ -47,7 +54,10 @@
     border-radius: 10%;
 }
 
-
+.remove-btn{
+    text-decoration: underline;
+    background: none;
+}
 
 .cart-game{
     display: flex;
@@ -88,4 +98,10 @@
     .cart-game-card{
         column-gap: 2rem;
     }
+}
+
+.remove-btn:hover{
+    color: #ed1c24;
+    transition: .3s;
+    background-color: none;
 }
