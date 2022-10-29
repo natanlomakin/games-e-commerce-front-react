@@ -9,6 +9,7 @@ const Cart = () => {
   const [cartGameDetails, setCartGameDetails] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0.0);
   const [iscartUpdated, setIscartUpdated] = useState(false);
+  const [isGameInWishlist, setisGameInWishlist] = useState(false);
 
   useEffect(() => {
     setTotalPrice(0.0);

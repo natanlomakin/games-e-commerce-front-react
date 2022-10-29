@@ -7,9 +7,13 @@
 
 .register-info{
     padding: 3rem;
-    border-style: solid;
-    border-style: ridge;
+    border-inline-start: .2rem solid;
+    border-block-start: .2rem solid;
+    border-image-source:
+    radial-gradient(ellipse at top left, #ed1c24,transparent 60%);
+    border-image-slice: 1;
     border-color: #ed1c24;
+
 }
 
 .register-info form > *{

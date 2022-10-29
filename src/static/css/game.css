@@ -1,16 +1,11 @@
-
-
 .game-container{
     max-width: 100rem;
     margin-inline: auto;
     padding-inline: 2rem;
     display: flex;
-   
-    
 }
 
 .game-images{
-    
     display: flex;
     flex: 70%;
     padding: 3rem;
@@ -20,11 +15,9 @@
 }
 
 .game-feature-image{
-    
     object-fit: cover;
     max-width: 100%;
     border-radius: 2%;
-    
 }
 
 .game-details >*{
@@ -41,37 +34,25 @@
 }
 
 .game-specs >*{
-
     padding: .5rem;
     color: #f2f5ea;
-    
-    
 }
 
 .game-caruosel{
-    
     display: flex;
-    
     max-width: 20%;
-    
-    
     gap: .25rem ;
-    
 }
+
 .game-cart-button-block{
     pointer-events: none;
     color: black;
 }
 
-
-
 .game-wishlist-button-block{
     pointer-events: none;
     color: black;
 }
-
-
-
 
 .game-caruosel-images{
     aspect-ratio: 2 / 1;

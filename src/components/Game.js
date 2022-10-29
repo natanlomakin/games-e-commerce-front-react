@@ -17,6 +17,8 @@ const Game = () => {
   );
   const [cartModal, setCartModal] = useState(false);
   const [wishlistModal, setWishlistModal] = useState(false);
+  const [canAddGameToCart, setCanAddGameToCart] = useState(true);
+  const [canAddGameToWishlist, setcanAddGameToWishlist] = useState(true);
 
   useEffect(() => {
     const server_data = async () => {
@@ -29,7 +31,7 @@ const Game = () => {
   }, []);
 
   const isGameInCart = async () => {
-    const result = await axios(SERVER_URL + "/cart/getusercartgames/", {
+    const cartResult = await axios(SERVER_URL + "/cart/getusercartgames/", {
       headers: {
         authorization: "Bearer " + localStorage.getItem("access-token"),
       },
@@ -41,16 +43,37 @@ const Game = () => {
       }
     });
 
-    for (let i = 0; i < result.data.length; i++) {
-      if (result.data[i].game === game._id) {
+    const wishlistResult = await axios(
+      SERVER_URL + "/wishlist/getuserwishlist/",
+      {
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("access-token"),
+        },
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }
+    );
+
+    for (let i = 0; i < cartResult.data.length; i++) {
+      if (cartResult.data[i].game === game._id) {
         console.log("Game allredy in cart");
         setCartButtonContent("Game allredy in cart");
         setcartButtonState("game-cart-button-block");
         return;
       }
     }
-    console.log("test");
-    addGameToCart();
+
+    for (let i = 0; i < wishlistResult.data.length; i++) {
+      if (wishlistResult.data[i].game === game._id) {
+        setCanAddGameToCart(false);
+        return;
+      }
+    }
+
+    if (canAddGameToCart) {
+      console.log(canAddGameToCart);
+      addGameToCart();
+    }
   };
 
   const addGameToCart = async () => {
@@ -69,33 +92,52 @@ const Game = () => {
         "Content-Type": "application/json",
       }
     );
-    console.log(result);
+
     setCartModal(true);
   };
 
   const isGameInWishlist = async () => {
-    const result = await axios(SERVER_URL + "/wishlist/getuserwishlist/", {
+    const wishlistResult = await axios(
+      SERVER_URL + "/wishlist/getuserwishlist/",
+      {
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("access-token"),
+        },
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }
+    );
+
+    const cartResult = await axios(SERVER_URL + "/cart/getusercartgames/", {
       headers: {
         authorization: "Bearer " + localStorage.getItem("access-token"),
       },
       Accept: "application/json",
       "Content-Type": "application/json",
     });
-    console.log(result.data);
-    for (let i = 0; i < result.data.length; i++) {
-      if (result.data[i].game === game._id) {
-        console.log("Game allredy in wishlist");
+
+    for (let i = 0; i < wishlistResult.data.length; i++) {
+      if (wishlistResult.data[i].game === game._id) {
+        setCanAddGameToCart(false);
         setWishlistButtonContent("Game allredy in wishlist");
         setWishlistButtonState("game-wishlist-button-block");
         return;
       }
     }
-    console.log("test");
-    addGameToWishlist();
+
+    for (let i = 0; i < cartResult.data.length; i++) {
+      if (cartResult.data[i].game === game._id) {
+        setcanAddGameToWishlist(false);
+        return;
+      }
+    }
+
+    if (canAddGameToWishlist) {
+      addGameToWishlist();
+    }
   };
 
   const addGameToWishlist = async () => {
-    console.log("Bearer " + localStorage.getItem("access-token"));
     const result = await axios.post(
       SERVER_URL + "/wishlist/addtouserwishlist/",
       {

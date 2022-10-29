@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import "../static/css/navbar.css";
-import AuthContext from "../context/AuthContext";
 import axios from "axios";
 import { SERVER_URL } from "../utils/serverUtil";
 
@@ -22,7 +21,9 @@ const NavBar = () => {
     setIsAuthenticated(localStorage.getItem("access-token"));
     const userProfile = async () => {
       const result = await axios(SERVER_URL + "/userprofile/getuserprofile/", {
-        headers: { authorization: "Bearer " + localStorage.getItem("access-token") },
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("access-token"),
+        },
         Accept: "application/json",
         "Content-Type": "application/json",
       }).catch(
@@ -33,38 +34,43 @@ const NavBar = () => {
       console.log(result.data.profilePicture);
       setProfilePicture(SERVER_URL + result.data.profilePicture);
     };
-    if (localStorage.getItem("access-token")) {
-      userProfile();
-    } else {
-      setProfilePicture(
-        "https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png"
-      );
-    }
+    localStorage.getItem("access-token")
+      ? userProfile()
+      : setProfilePicture(
+          "https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png"
+        );
   }, [isAuthenticated]);
 
   const displayByLoginStatus = () => {
-    if (!isAuthenticated) {
-      return (
-        <div className="container">
-          <nav>
-            <h2 className="logo">
-              1<span>UP</span>
-            </h2>
-            <ul>
-              <li>
-                <NavLink to="/">Home</NavLink>
-              </li>
-              <li>
-                <NavLink to="/mainboard">Store</NavLink>
-              </li>
-              <li>
-                <NavLink>Service</NavLink>
-              </li>
-            </ul>
-            <div className="dropdown">
-              <button className="dropbtn">
-                <img src={profilePicture} className="profilePic" alt="..." />
-              </button>
+    return (
+      <div className="container">
+        <nav>
+          <h2 className="logo">
+            1<span>UP</span>
+          </h2>
+          <ul>
+            <li>
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/mainboard">Store</NavLink>
+            </li>
+            <li>
+              <NavLink>Service</NavLink>
+            </li>
+          </ul>
+          <div className="dropdown">
+            <button className="dropbtn">
+              <img src={profilePicture} className="profilePic" alt="..." />
+            </button>
+            {isAuthenticated ? (
+              <div className="dropdown-content">
+                <NavLink to="/profile">Profile</NavLink>
+                <a onClick={logoutHandle}>Logout</a>
+                <NavLink to="/wishlist">Wishlist</NavLink>
+                <NavLink to="/cart">Cart</NavLink>
+              </div>
+            ) : (
               <div className="dropdown-content">
                 <NavLink to="/profile">Profile</NavLink>
                 <NavLink to="/login">Login</NavLink>
@@ -72,53 +78,12 @@ const NavBar = () => {
                 <NavLink to="/wishlist">Wishlist</NavLink>
                 <NavLink to="/cart">Cart</NavLink>
               </div>
-            </div>
-            {/* <NavLink className="cartButton" to="/cart">
-          Cart
-        </NavLink> */}
-            {/* <button type="button">Cart</button> */}
-          </nav>
-          <Outlet />
-        </div>
-      );
-    } else {
-      return (
-        <div className="container">
-          <nav>
-            <h2 className="logo">
-              1<span>UP</span>
-            </h2>
-            <ul>
-              <li>
-                <NavLink to="/">Home</NavLink>
-              </li>
-              <li>
-                <NavLink to="/mainboard">Store</NavLink>
-              </li>
-              <li>
-                <NavLink>Service</NavLink>
-              </li>
-            </ul>
-            <div className="dropdown">
-              <button className="dropbtn">
-                <img src={profilePicture} className="profilePic" alt="..." />
-              </button>
-              <div className="dropdown-content">
-                <NavLink to="/profile">Profile</NavLink>
-                <a onClick={logoutHandle}>Logout</a>
-                <NavLink to="/wishlist">Wishlist</NavLink>
-                <NavLink to="/cart">Cart</NavLink>
-              </div>
-            </div>
-            {/* <NavLink className="cartButton" to="/cart">
-      Cart
-    </NavLink> */}
-            {/* <button type="button">Cart</button> */}
-          </nav>
-          <Outlet />
-        </div>
-      );
-    }
+            )}
+          </div>
+        </nav>
+        <Outlet />
+      </div>
+    );
   };
 
   return displayByLoginStatus();

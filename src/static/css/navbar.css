@@ -13,7 +13,6 @@
     background: #191716;
     background-repeat: round;
     position: sticky;
-    
   }
 
 nav{
@@ -117,15 +116,3 @@ button:hover{
   .dropdown:hover .dropbtn {
     background-color: #440d0f;
   }
-
-  /* .cartButton{
-    border: none;
-    background: #ebe6e7;
-    padding: 12px 30px;
-    border-radius: 40px;
-    color: white;
-    font-weight: bold;
-    font-size: 15px;
-    transition: .4s;
-  } */
-

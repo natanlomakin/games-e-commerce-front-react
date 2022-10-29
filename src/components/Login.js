@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
 import { SERVER_URL } from "../utils/serverUtil";
 import { parseJwt } from "../utils/tokenDecode";
 

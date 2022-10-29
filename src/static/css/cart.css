@@ -7,8 +7,7 @@
 .cart-container{
     display: flex;
     column-gap: 3rem;
-    align-items: center;
-    
+    align-items: top;
 }
 
 .cart-game-card{
@@ -27,9 +26,8 @@
     border-inline-start: .2rem solid;
     border-block-start: .2rem solid;
     border-image-source:
-    radial-gradient(circle at top left, #ed1c24,transparent 80%);
+    radial-gradient(ellipse at left, #ed1c24,transparent 70%);
     border-image-slice: 1;
-    
     column-gap: 6rem;
 }
 
@@ -43,7 +41,6 @@
 
 .cart-game-price{
     padding: .25rem ;
-    
 }
 
 .cart-game-image{
@@ -83,7 +80,6 @@
 
     .cart-order-information{
         flex: 100%;
-        
     }
 
     .cart-container{

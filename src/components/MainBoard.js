@@ -6,17 +6,42 @@ import "../static/css/mainboard.css";
 
 const MainBoard = () => {
   const [games, setGames] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+
   useEffect(() => {
     const server_data = async () => {
-      const result = await axios(SERVER_URL + "/game/allthegames/");
+      const result = searchValue
+        ? await axios(SERVER_URL + "/game/searchgame/" + searchValue)
+        : await axios(SERVER_URL + "/game/allthegames/");
       setGames(result.data);
     };
 
     server_data();
-  }, []);
+  }, [searchValue]);
+
+  const searchHandle = async () => {
+    console.log(searchValue);
+    const result = await axios(SERVER_URL + "/game/searchgame/" + searchValue);
+    console.log(result.data);
+  };
 
   return (
     <div className="mainBoardContainer">
+      <div className="search-box">
+        <form onSubmit={searchHandle}>
+          <h3>
+            Search:{" "}
+            <input
+              type="text"
+              placeholder="game title"
+              autoComplete={"false"}
+              onChange={(e) => {
+                setSearchValue(e.target.value);
+              }}
+            ></input>
+          </h3>
+        </form>
+      </div>
       <div className="games-grid">
         {games.map((game, ind) => (
           <NavLink key={ind} to={"/game/" + game._id} className="card stacked">

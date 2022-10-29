@@ -12,15 +12,15 @@ const Register = () => {
   const [email, setEmail] = useState("");
 
   const registerHandle = async () => {
-    const response = await axios.post(SERVER_URL + "/register/register/", {
-      username: username,
-      first_name: firstName,
-      last_name: lastName,
-      email: email,
-      password: password,
-    });
-    window.location.href = "/login";
-    return response;
+    const response = await axios
+      .post(SERVER_URL + "/register/register/", {
+        username: username,
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        password: password,
+      })
+      .then((window.location.href = "/login"));
   };
 
   return (
