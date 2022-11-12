@@ -36,6 +36,7 @@
 .game-specs >*{
     padding: .5rem;
     color: #f2f5ea;
+    padding-left: 0rem;
 }
 
 .game-caruosel{

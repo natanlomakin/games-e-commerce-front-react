@@ -208,6 +208,9 @@ const Game = () => {
             {game.price}
             <i className="material-icons">attach_money</i>
           </h3>
+          <h3>
+            <span>About</span> :
+          </h3>
           <p>
             {game.description} !! Lorem ipsum dolor sit amet, consectetuer
             adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
@@ -229,17 +232,36 @@ const Game = () => {
             <span>Genre</span> : {game.genre}
           </h4>
           <div>
+            <div className="game-specs">
+              <h3>
+                <span>Specifications</span> :
+              </h3>
+              <h4>
+                <span>OS:</span> {game.osVersion}
+              </h4>
+              <h4>
+                <span>CPU:</span> {game.cpu}
+              </h4>
+              <h4>
+                <span>GPU:</span> {game.gpu}
+              </h4>
+              <h4>
+                <span>Memory:</span> {game.memory}
+              </h4>
+            </div>
             {cartModal && (
               <div className="modal">
                 <div className="modal-content">
                   Game succesfully added to cart
-                  <i
-                    type="button"
-                    className="material-icons"
-                    onClick={toggleCartModal}
-                  >
-                    close
-                  </i>
+                  <span>
+                    <i
+                      type="button"
+                      className="material-icons"
+                      onClick={toggleCartModal}
+                    >
+                      close
+                    </i>
+                  </span>
                 </div>
               </div>
             )}
@@ -247,13 +269,15 @@ const Game = () => {
               <div className="modal">
                 <div className="modal-content">
                   Game succesfully added to wishlist
-                  <i
-                    type="button"
-                    className="material-icons"
-                    onClick={toggleWishlistModal}
-                  >
-                    close
-                  </i>
+                  <span>
+                    <i
+                      type="button"
+                      className="material-icons"
+                      onClick={toggleWishlistModal}
+                    >
+                      close
+                    </i>
+                  </span>
                 </div>
               </div>
             )}
@@ -266,26 +290,6 @@ const Game = () => {
               {/* <i className="material-icons">add</i> */}
             </button>
           </div>
-        </div>
-
-        <div className="game-specs">
-          <h2>Specifications</h2>
-          <h4>
-            <span>OS:</span>
-          </h4>
-          <p>{game.osVersion}</p>
-          <h4>
-            <span>CPU:</span>
-          </h4>
-          <p>{game.cpu}</p>
-          <h4>
-            <span>GPU:</span>
-          </h4>
-          <p>{game.gpu}</p>
-          <h4>
-            <span>Memory:</span>
-          </h4>
-          <p>{game.memory}</p>
         </div>
       </div>
     </div>

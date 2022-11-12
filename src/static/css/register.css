@@ -16,6 +16,11 @@
 
 }
 
+.register-or-login{
+    text-decoration: none;
+    color:#ed1c24;
+}
+
 .register-info form > *{
     padding: 1rem;
 }

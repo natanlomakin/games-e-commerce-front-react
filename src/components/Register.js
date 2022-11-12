@@ -79,7 +79,10 @@ const Register = () => {
             ></input>
           </div>
           <p>
-            Already have an account? <NavLink to="/login">Login</NavLink>
+            Already have an account?{" "}
+            <NavLink className="register-or-login" to="/login">
+              Login
+            </NavLink>
           </p>
           <button type="submit">Sign me up</button>
         </form>

@@ -65,16 +65,24 @@
     padding: 1rem;
 }
 
+input:focus {
+    background-color: rgb(190, 173, 230);
+  }
+
 a:link{
     text-decoration: none;
 }
 
 .card:hover .card__title {
-    color:#f2f5ea;
+    color:#edeaf5;
 }
 
 .card:hover .card__content{
     background: #ed1c24;
+}
+
+.card:hover{
+    padding: 0rem;
 }
 
 @media (max-width: 500px) {

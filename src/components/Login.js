@@ -56,7 +56,10 @@ const Login = () => {
             ></input>
           </div>
           <p>
-            Dont have an account? <NavLink to="/register">Register</NavLink>
+            Dont have an account?{" "}
+            <NavLink className="register-or-login" to="/register">
+              Register
+            </NavLink>
           </p>
           <button>Log in</button>
         </form>
