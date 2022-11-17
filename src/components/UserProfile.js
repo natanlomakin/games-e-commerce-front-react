@@ -1,195 +1,166 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { SERVER_URL } from "../utils/serverUtil";
+import { updateAccessToken } from "../utils/updateAccessToken";
+import { parseJwt } from "../utils/tokenDecode";
 import "../static/css/cart.css";
-import { NavLink } from "react-router-dom";
 import "../static/css/userProfile.css";
 
 const UserProfile = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [profileData, setProfileData] = useState("");
-  const [picture, setPicture] = useState("default");
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
-  const [street, setStreet] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [dateOfBirth, setdateOfBirth] = useState("");
-
-  const testPic = (e) => {
-    console.log(e.slice(11));
-  };
-
-  const CreateUserProfile = async (e) => {
-    console.log(picture);
-    e.preventDefault();
-    const response = console.log(picture);
-    await axios
-      .post(
-        SERVER_URL + "/userprofile/adduserprofile/",
-        {
-          user: localStorage.getItem("user"),
-          profilePicture: picture,
-          country: country,
-          city: city,
-          street: street,
-          zipcode: zipcode,
-          dateOfBirth: dateOfBirth,
-        },
-        {
-          headers: {
-            authorization: "Bearer " + localStorage.getItem("access-token"),
-          },
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        }
-      )
-      .then((result) => console.log(result));
-
-    /* .then(window.location.reload()); */
-  };
+  const [picture, setPicture] = useState(
+    "https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png"
+  );
+  const [country, setCountry] = useState(" ");
+  const [city, setCity] = useState(" ");
+  const [street, setStreet] = useState(" ");
+  const [zipcode, setZipcode] = useState(" ");
+  const [dateOfBirth, setDateOfBirth] = useState(" ");
 
   useEffect(() => {
     const server_data = async () => {
-      try {
-        const result = await axios(
-          SERVER_URL + "/userprofile/getuserprofile/",
-          {
-            headers: {
-              authorization: "Bearer " + localStorage.getItem("access-token"),
-            },
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          }
-        );
-        setProfileData(
-          <div className="profile-container">
-            <img
-              className="user-profile-image"
-              src={SERVER_URL + result.data.profilePicture}
-            ></img>
-            <div className="profile-information">
-              <h2>
-                <span>Country:</span>
-              </h2>
-              <h3>{result.data.country}</h3>
-              <h2>
-                <span>City:</span>
-              </h2>
-              <h3>{result.data.city}</h3>
-              <h2>
-                <span>Street:</span>
-              </h2>
-              <h3>{result.data.street}</h3>
-              <h2>
-                <span>Zipcode:</span>
-              </h2>
-              <h3>{result.data.zipCode}</h3>
-              <h2>
-                <span>Date of birth:</span>
-              </h2>
-              <h3>{result.data.dateOfBirth}</h3>
-            </div>
-            <div className="user-orders">
-              <h2>Your orders:</h2>
-            </div>
-          </div>
-        );
-      } catch (error) {
+      const result = await axios(SERVER_URL + "/userprofile/getuserprofile/", {
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("access-token"),
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }).catch((error) => {
         if (error.response.status === 500) {
-          setProfileData(
-            <div className="profile-container">
-              <div className="profile-information">
-                <h1>Please update your profile details </h1>
-                <br />
-                <form onSubmit={CreateUserProfile}>
-                  <div>
-                    <h2>
-                      <span>Profile pic </span>
-                    </h2>
-                    <input
-                      type="file"
-                      id="profilePicture"
-                      autoComplete="false"
-                      onChange={(e) =>
-                        setPicture("/media/" + e.target.value.slice(12))
-                      }
-                    ></input>
-                  </div>
-                  <div>
-                    <h2>
-                      <span>Country:</span>
-                    </h2>
-                    <input
-                      id="country"
-                      type="text"
-                      autoComplete={"false"}
-                      onChange={(e) => setCountry(e.target.value)}
-                    ></input>
-                  </div>
-                  <div>
-                    <h2>
-                      <span>City:</span>
-                    </h2>
-                    <input
-                      id="city"
-                      type="text"
-                      autoComplete={"false"}
-                      onChange={(e) => setCity(e.target.value)}
-                    ></input>
-                  </div>
-                  <div>
-                    <h2>
-                      <span>Street:</span>
-                    </h2>
-                    <input
-                      id="street"
-                      type="text"
-                      autoComplete={"false"}
-                      onChange={(e) => setStreet(e.target.value)}
-                    ></input>
-                  </div>
-                  <div>
-                    <h2>
-                      <span>Zipcode:</span>
-                    </h2>
-                    <input
-                      id="zipCode"
-                      type="text"
-                      autoComplete={"false"}
-                      onChange={(e) => setZipcode(e.target.value)}
-                    ></input>
-                  </div>
-                  <div>
-                    <h2>
-                      <span>Date of birth:</span>
-                    </h2>
-                    <input
-                      id="dateOfBirth"
-                      type="text"
-                      autoComplete={"false"}
-                      onChange={(e) => setdateOfBirth(e.target.value)}
-                    ></input>
-                  </div>
-                  <div>
-                    <br />
-                    <button type="submit">Create profile</button>
-                  </div>
-                </form>
-              </div>
-            </div>
+          setUsername(parseJwt(localStorage.getItem("access-token")).username);
+          setFirstName(
+            parseJwt(localStorage.getItem("access-token")).first_name
           );
+          setLastName(parseJwt(localStorage.getItem("access-token")).last_name);
+          setEmail(parseJwt(localStorage.getItem("access-token")).email);
         } else if (error.response.status === 401) {
-          setProfileData(
-            <div className="profile-container">
-              <h2>Please log in or register</h2>
-            </div>
-          );
+          updateAccessToken(server_data);
         }
-      }
+      });
+      setPicture(SERVER_URL + result.data.profilePicture);
+      setCountry(result.data.country);
+      setCity(result.data.city);
+      setStreet(result.data.street);
+      setZipcode(result.data.zipCode);
+      setDateOfBirth(result.data.dateOfBirth);
+      setUsername(parseJwt(localStorage.getItem("access-token")).username);
+      setFirstName(parseJwt(localStorage.getItem("access-token")).first_name);
+      setLastName(parseJwt(localStorage.getItem("access-token")).last_name);
+      setEmail(parseJwt(localStorage.getItem("access-token")).email);
     };
     server_data();
   }, []);
 
-  return profileData;
+  const handlePicture = async (e) => {
+    e.preventDefault();
+    console.log(e.target.files[0]);
+    await setPicture(e.target.files[0].name);
+  };
+
+  const handleCountry = async (e) => {
+    e.preventDefault();
+    await setCountry(e.target.value);
+  };
+
+  const handleCity = async (e) => {
+    e.preventDefault();
+    await setCity(e.target.value);
+  };
+
+  const handleStreet = async (e) => {
+    e.preventDefault();
+    await setStreet(e.target.value);
+  };
+
+  const handleZipcode = async (e) => {
+    e.preventDefault();
+    await setZipcode(e.target.value);
+  };
+
+  const handleDateOfBirth = async (e) => {
+    e.preventDefault();
+    await setDateOfBirth(e.target.value);
+  };
+
+  const CreateUserProfile = async (e) => {
+    e.preventDefault();
+
+    let form_data = new FormData();
+    form_data.append("picture", picture);
+    form_data.append("country", country);
+    form_data.append("city", city);
+    form_data.append("street", street);
+    form_data.append("zipCode", zipcode);
+    form_data.append("dateOfBirth", dateOfBirth);
+    form_data.append("user", localStorage.getItem("user"));
+
+    const response = await axios
+      .post(SERVER_URL + "/userprofile/adduserprofile/", form_data, {
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("access-token"),
+        },
+        "content-type": "multipart/form-data",
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response.status === 401) {
+          updateAccessToken(CreateUserProfile(e));
+        }
+      });
+    console.log(response);
+    /* .then(window.location.reload()); */
+  };
+
+  return (
+    <div className="profile-container">
+      <img className="user-profile-image" src={picture}></img>
+      <div className="profile-information">
+        <h2>
+          <span>Username:</span>
+        </h2>
+        <h3 className="profile-information-cell">{username}</h3>
+        <h2>
+          <span>First name:</span>
+        </h2>
+        <h3 className="profile-information-cell">{firstName}</h3>
+        <h2>
+          <span>Last name:</span>
+        </h2>
+        <h3 className="profile-information-cell">{lastName}</h3>
+        <h2>
+          <span>Email:</span>
+        </h2>
+        <h3 className="profile-information-cell">{email}</h3>
+        <h2>
+          <span>Country:</span>
+        </h2>
+        <h3 className="profile-information-cell">{country}</h3>
+        <h2>
+          <span>City:</span>
+        </h2>
+        <h3 className="profile-information-cell">{city}</h3>
+        <h2>
+          <span>Street:</span>
+        </h2>
+        <h3 className="profile-information-cell">{street}</h3>
+        <h2>
+          <span>Zipcode:</span>
+        </h2>
+        <h3 className="profile-information-cell">{zipcode}</h3>
+        <h2>
+          <span>Date of birth:</span>
+        </h2>
+        <h3 className="profile-information-cell">{dateOfBirth}</h3>
+      </div>
+      <div className="user-orders">
+        <h2>Your orders:</h2>
+      </div>
+    </div>
+  );
 };
 
 export default UserProfile;

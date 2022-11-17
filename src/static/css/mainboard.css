@@ -40,6 +40,14 @@
     border-radius: 4px;
 }
 
+.card__badge{
+    padding: .5rem;
+    color: magenta;
+    font-weight: normal;
+    font-size: 150%;
+    
+}
+
 .card__title{
     color: #ed1c24;
     padding: .1rem ;

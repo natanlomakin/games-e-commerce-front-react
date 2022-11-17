@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { SERVER_URL } from "../utils/serverUtil";
 import "../static/css/game.css";
+import { updateAccessToken } from "../utils/updateAccessToken";
 
 const Game = () => {
   const [game, setGame] = useState("");
@@ -37,9 +38,11 @@ const Game = () => {
       },
       Accept: "application/json",
       "Content-Type": "application/json",
-    }).catch(function (error) {
-      if (error.response) {
-        console.log(error.response.data);
+    }).catch((error) => {
+      console.log(error.response.status);
+
+      if (error.response.status === 401) {
+        updateAccessToken(isGameInCart);
       }
     });
 
@@ -106,7 +109,13 @@ const Game = () => {
         Accept: "application/json",
         "Content-Type": "application/json",
       }
-    );
+    ).catch((error) => {
+      console.log(error.response.status);
+
+      if (error.response.status === 401) {
+        updateAccessToken(isGameInWishlist);
+      }
+    });
 
     const cartResult = await axios(SERVER_URL + "/cart/getusercartgames/", {
       headers: {

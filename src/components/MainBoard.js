@@ -50,6 +50,7 @@ const MainBoard = () => {
               alt=""
               className="card__img"
             ></img>
+            <h4 className="card__badge">{game.genre}</h4>
             <div className="card__content">
               <h2 className="card__title">{game.title}</h2>
               <p className="card__price">{game.price}$</p>

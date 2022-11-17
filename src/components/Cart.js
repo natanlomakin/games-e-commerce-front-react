@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { SERVER_URL } from "../utils/serverUtil";
+import { updateAccessToken } from "../utils/updateAccessToken";
 import "../static/css/cart.css";
 import { NavLink } from "react-router-dom";
 
@@ -20,6 +21,12 @@ const Cart = () => {
         },
         Accept: "application/json",
         "Content-Type": "application/json",
+      }).catch((error) => {
+        console.log(error.response.status);
+
+        if (error.response.status === 401) {
+          updateAccessToken(cartData);
+        }
       });
       setCartDetails(resultCart.data);
     };
@@ -46,18 +53,21 @@ const Cart = () => {
   }, [cartDetails]);
 
   const removeGameFromCart = async (e) => {
-    console.log(e.target);
-    const result = await axios.delete(
-      SERVER_URL + "/cart/deletefromcart/" + e.target.value,
-      {
+    const result = await axios
+      .delete(SERVER_URL + "/cart/deletefromcart/" + e.target.value, {
         headers: {
           authorization: "Bearer " + localStorage.getItem("access-token"),
         },
         Accept: "application/json",
         "Content-Type": "application/json",
-      }
-    );
-    /* window.location.reload(); */
+      })
+      .catch((error) => {
+        console.log(error.response.status);
+
+        if (error.response.status === 401) {
+          updateAccessToken(removeGameFromCart(e));
+        }
+      });
     setIscartUpdated(true);
   };
 
@@ -77,6 +87,13 @@ const Cart = () => {
           "Content-Type": "application/json",
         }
       )
+      .catch((error) => {
+        console.log(error.response.status);
+
+        if (error.response.status === 401) {
+          updateAccessToken(moveGameToWishlist(e));
+        }
+      })
       .then(removeGameFromCart(e));
   };
 
