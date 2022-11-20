@@ -5,15 +5,6 @@
     font-family: 'Josefin Sans', sans-serif;
     text-align: justify;
   }
-  
-  .container{
-    min-height: 100vh;
-    max-width: 100%;
-    background-image:url(https://img.freepik.com/free-photo/colorful-abstract-nebula-space-background_53876-111356.jpg?w=1380&t=st=1667751040~exp=1667751640~hmac=48f8dd81d63c3a7ccc1fa3a0b12a303de73c8185302d249c34e0ea26baba7af0);
-    /* background: #3A001E; */
-    background: linear-gradient(0.25turn, #3A001E,#354F7C);
-    background-repeat: round;
-  }
 
 nav{
     display: flex;

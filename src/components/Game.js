@@ -218,7 +218,7 @@ const Game = () => {
             <i className="material-icons">attach_money</i>
           </h3>
           <h3>
-            <span>About</span> :
+            <span>Description</span> :
           </h3>
           <p>
             {game.description} !! Lorem ipsum dolor sit amet, consectetuer

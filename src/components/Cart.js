@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Outlet, NavLink } from "react-router-dom";
 import { SERVER_URL } from "../utils/serverUtil";
 import { updateAccessToken } from "../utils/updateAccessToken";
 import "../static/css/cart.css";
-import { NavLink } from "react-router-dom";
 
 const Cart = () => {
   const [cartDetails, setCartDetails] = useState([]);
@@ -95,6 +95,59 @@ const Cart = () => {
         }
       })
       .then(removeGameFromCart(e));
+    console.log(result);
+  };
+
+  const checkout = async () => {
+    console.log();
+    for (let i = 0; i < cartDetails.length; i++) {
+      const response = await axios
+        .post(
+          SERVER_URL + "/order/adduserorder/",
+          {
+            user: localStorage.getItem("user"),
+            cart: `${cartDetails[i]._id}`,
+            total: `${totalPrice}`,
+            payment: "2",
+          },
+          {
+            headers: {
+              authorization: "Bearer " + localStorage.getItem("access-token"),
+            },
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          }
+        )
+        .catch((error) => {
+          console.log(error);
+          if (error.response.status === 401) {
+            updateAccessToken();
+          }
+        });
+
+      removeGameAfterCheckout(cartDetails);
+    }
+  };
+
+  const removeGameAfterCheckout = async (gamesList) => {
+    for (let i = 0; i < gamesList.length; i++) {
+      const result = await axios
+        .delete(SERVER_URL + "/cart/deletefromcart/" + gamesList[i].game, {
+          headers: {
+            authorization: "Bearer " + localStorage.getItem("access-token"),
+          },
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        })
+        .catch((error) => {
+          console.log(error.response.status);
+
+          /*  if (error.response.status === 401) {
+            updateAccessToken(removeGameFromCart(e));
+          } */
+        });
+    }
+    setIscartUpdated(true);
   };
 
   return (
@@ -144,7 +197,9 @@ const Cart = () => {
             {totalPrice}
             <i className="material-icons">attach_money</i>
           </h3>
-          <button>CHECK OUT</button>
+          <button value={cartGameDetails} onClick={checkout}>
+            CHECK OUT
+          </button>
         </div>
       </div>
     </div>
