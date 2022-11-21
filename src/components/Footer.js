@@ -5,9 +5,20 @@ import "../static/css/footer.css";
 const Footer = () => {
   return (
     <div className="footer-container">
-      <NavLink to="/">Home</NavLink>
-      <NavLink to="/mainboard">Store</NavLink>
-      <NavLink>Service</NavLink>
+      <div className="footer-row-links-container">
+        <NavLink className="footer-link" to="">
+          Terms of Service
+        </NavLink>
+        <NavLink className="footer-link" to="">
+          Privacy Policy
+        </NavLink>
+        <NavLink className="footer-link">Store Refund Policy</NavLink>
+      </div>
+      <div className="footer-row-copyright-container">
+        <p>
+          © 2022 - 2022 http://localhost:3000/wishlist - All Rights Reserved.
+        </p>
+      </div>
     </div>
   );
 };

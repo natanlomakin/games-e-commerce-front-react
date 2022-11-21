@@ -45,6 +45,15 @@
     gap: .25rem ;
 }
 
+.game-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10%;
+    padding: 1rem;
+    
+}
+
 .game-cart-button-block{
     pointer-events: none;
     color: black;
@@ -87,6 +96,11 @@
     }
     .game-container{
         flex-flow: column;
+    }
+    .game-buttons{
+        flex-direction: column;
+        gap: 2rem;
+        flex-flow: wrap;
     }
 }
 

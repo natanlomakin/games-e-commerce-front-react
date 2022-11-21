@@ -290,14 +290,17 @@ const Game = () => {
                 </div>
               </div>
             )}
-            <button className={cartButtonState} onClick={isGameInCart}>
-              {cartButtonContent}
-              {/* <i className="material-icons">add</i> */}
-            </button>{" "}
-            <button className={wishlistButtonState} onClick={isGameInWishlist}>
-              {wishlistButtonContent}{" "}
-              {/* <i className="material-icons">add</i> */}
-            </button>
+            <div className="game-buttons">
+              <button className={cartButtonState} onClick={isGameInCart}>
+                {cartButtonContent}
+              </button>{" "}
+              <button
+                className={wishlistButtonState}
+                onClick={isGameInWishlist}
+              >
+                {wishlistButtonContent}{" "}
+              </button>
+            </div>
           </div>
         </div>
       </div>

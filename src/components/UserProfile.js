@@ -69,6 +69,10 @@ const UserProfile = () => {
           "Content-Type": "application/json",
         },
       });
+      console.log(response.data);
+      /* if (response.data) {
+        
+      } */
       setOrders(response.data);
     };
     ordersData();
@@ -109,13 +113,13 @@ const UserProfile = () => {
     e.preventDefault();
 
     const form_data = new FormData();
-    await form_data.append("profilePicture", picture);
-    await form_data.append("country", country);
-    await form_data.append("city", city);
-    await form_data.append("street", street);
-    await form_data.append("zipCode", zipcode);
-    await form_data.append("dateOfBirth", dateOfBirth);
-    await form_data.append("user", localStorage.getItem("user"));
+    form_data.append("profilePicture", picture);
+    form_data.append("country", country);
+    form_data.append("city", city);
+    form_data.append("street", street);
+    form_data.append("zipCode", zipcode);
+    form_data.append("dateOfBirth", dateOfBirth);
+    form_data.append("user", localStorage.getItem("user"));
     console.log(form_data);
     console.log(SERVER_URL + "/userprofile/updateuserprofile/" + profileId);
     const response = await axios
@@ -135,8 +139,7 @@ const UserProfile = () => {
           updateAccessToken(updateUserProfile(e));
         }
       });
-    console.log(response);
-    /* .then(window.location.reload()); */
+    window.location.reload();
   };
 
   return (
@@ -261,7 +264,6 @@ const UserProfile = () => {
           </div>
         </div>
       )}
-
       <div className="user-orders">
         <h2>Your orders:</h2>
         <div className="cart-container">
