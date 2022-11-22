@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/games-e-commerce-front-react/static/css/main.d32a7f0b.css",
+    "main.js": "/games-e-commerce-front-react/static/js/main.7926dc12.js",
+    "static/media/homepage.png": "/games-e-commerce-front-react/static/media/homepage.d8642c19859b3cb19178.png",
+    "index.html": "/games-e-commerce-front-react/index.html",
+    "main.d32a7f0b.css.map": "/games-e-commerce-front-react/static/css/main.d32a7f0b.css.map",
+    "main.7926dc12.js.map": "/games-e-commerce-front-react/static/js/main.7926dc12.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d32a7f0b.css",
+    "static/js/main.7926dc12.js"
+  ]
+}
