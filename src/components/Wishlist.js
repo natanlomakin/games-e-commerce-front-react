@@ -82,6 +82,12 @@ const Wishlist = () => {
     setIsWishlistUpdated(!isWishlistUpdated);
   };
 
+  /**
+   * It removes a game from the user's wishlist,
+   * and creats a new cart with that game.
+   * @param e - the event object which contains
+   *            the game id to remove
+   */
   const moveGameToCart = async (e) => {
     const result = await axios
       .post(

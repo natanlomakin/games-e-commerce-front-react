@@ -64,7 +64,7 @@ const NavBar = () => {
               <NavLink to="/mainboard">Store</NavLink>
             </li>
             <li>
-              <NavLink>Service</NavLink>
+              <NavLink to="/contact">Contact</NavLink>
             </li>
           </ul>
           <div className="dropdown">

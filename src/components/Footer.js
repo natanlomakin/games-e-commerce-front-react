@@ -6,10 +6,10 @@ const Footer = () => {
   return (
     <div className="footer-container">
       <div className="footer-row-links-container">
-        <NavLink className="footer-link" to="">
+        <NavLink className="footer-link" >
           Terms of Service
         </NavLink>
-        <NavLink className="footer-link" to="">
+        <NavLink className="footer-link" >
           Privacy Policy
         </NavLink>
         <NavLink className="footer-link">Store Refund Policy</NavLink>

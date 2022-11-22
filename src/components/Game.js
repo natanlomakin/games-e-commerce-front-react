@@ -39,8 +39,6 @@ const Game = () => {
       Accept: "application/json",
       "Content-Type": "application/json",
     }).catch((error) => {
-      console.log(error.response.status);
-
       if (error.response.status === 401) {
         updateAccessToken(isGameInCart);
       }
@@ -59,7 +57,6 @@ const Game = () => {
 
     for (let i = 0; i < cartResult.data.length; i++) {
       if (cartResult.data[i].game === game._id) {
-        console.log("Game allredy in cart");
         setCartButtonContent("Game allredy in cart");
         setcartButtonState("game-cart-button-block");
         return;
@@ -74,7 +71,6 @@ const Game = () => {
     }
 
     if (canAddGameToCart) {
-      console.log(canAddGameToCart);
       addGameToCart();
     }
   };

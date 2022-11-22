@@ -1,0 +1,21 @@
+.homepage-container{
+    background-image: url(/src/static/images/homepage.png);
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    min-height: 75vh;
+    align-items: center;
+    justify-content: center;
+    color: #f2f5ea;
+    margin: 0rem 0rem 1rem 0rem;
+}
+
+.homepage-headline{
+    padding: 2rem;
+    text-align: center;
+}
+
+.homepage-info{
+    text-align: center;
+}

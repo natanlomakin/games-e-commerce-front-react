@@ -11,6 +11,7 @@ import Cart from "./components/Cart";
 import Wishlist from "./components/Wishlist";
 import UserProfile from "./components/UserProfile";
 import HomePage from "./components/HomePage";
+import Contact from "./components/Contact";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -19,6 +20,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route path="/" element={<HomePage />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/mainboard" element={<MainBoard />}></Route>
