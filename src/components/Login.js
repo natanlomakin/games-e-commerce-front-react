@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useState, useContext } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { SERVER_URL } from "../utils/serverUtil";
 import { parseJwt } from "../utils/tokenDecode";
 
@@ -8,8 +8,12 @@ const Login = () => {
   const [username, setUsername] = useState("guest");
   const [password, setPassword] = useState("");
 
-  let navigate = useNavigate();
-
+  /**
+   * It sends a POST request to the server with the username and password, and if the response is
+   * successful, it saves the access and refresh tokens in local storage and redirects the user to the
+   * mainboard page.
+   * @param e - event
+   */
   const loginHandle = async (e) => {
     e.preventDefault();
     let result = await axios
@@ -22,7 +26,6 @@ const Login = () => {
         { "Content-Type": "application/json" }
       )
       .then((response) => {
-        console.log(response.data);
         localStorage.setItem("access-token", response.data.access);
         localStorage.setItem("refresh-token", response.data.refresh);
         localStorage.setItem("user", parseJwt(response.data.access).user_id);

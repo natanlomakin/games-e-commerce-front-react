@@ -9,6 +9,11 @@ const MainBoard = () => {
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
+    /**
+     * If there is a searchValue,
+     * then use the searchgame route to get the game that matches the search value,
+     * otherwise use the allthegames route.
+     */
     const server_data = async () => {
       const result = searchValue
         ? await axios(SERVER_URL + "/game/searchgame/" + searchValue)
@@ -19,10 +24,12 @@ const MainBoard = () => {
     server_data();
   }, [searchValue]);
 
+  /**
+   * It takes the value of the search input and sends it to the server, which then returns a list of
+   * games that match the search value.
+   */
   const searchHandle = async () => {
-    console.log(searchValue);
     const result = await axios(SERVER_URL + "/game/searchgame/" + searchValue);
-    console.log(result.data);
   };
 
   return (

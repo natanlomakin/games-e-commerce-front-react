@@ -11,7 +11,10 @@ const Wishlist = () => {
   const [isWishlistUpdated, setIsWishlistUpdated] = useState(false);
 
   useEffect(() => {
-    setIsWishlistUpdated(false);
+    setIsWishlistUpdated(!isWishlistUpdated);
+    /**
+     * It makes a request to the server to get the wishlist data of the user.
+     */
     const wishlistData = async () => {
       const result = await axios(SERVER_URL + "/wishlist/getuserwishlist/", {
         headers: {
@@ -20,8 +23,6 @@ const Wishlist = () => {
         Accept: "application/json",
         "Content-Type": "application/json",
       }).catch((error) => {
-        console.log(error.response.status);
-
         if (error.response.status === 401) {
           updateAccessToken(wishlistData);
         }
@@ -32,8 +33,12 @@ const Wishlist = () => {
   }, [isWishlistUpdated]);
 
   useEffect(() => {
-    setIsWishlistUpdated(false);
+    setIsWishlistUpdated(!isWishlistUpdated);
     const result = [];
+    /**
+     * It loops through wishlistDetails which contains the game ids, and for each id, it pushes the result of an axios call
+     * to an array.
+     */
     const gameData = async () => {
       for (let i = 0; i < wishlistDetails.length; i++) {
         result.push(
@@ -49,6 +54,11 @@ const Wishlist = () => {
     gameData();
   }, [wishlistDetails]);
 
+  /**
+   * It removes a game from the user's wishlist.
+   * @param e - the event object which contains
+   *            the game id to remove
+   */
   const removeGameFromWishlist = async (e) => {
     console.log(e.target);
     const result = await axios
@@ -69,7 +79,7 @@ const Wishlist = () => {
           updateAccessToken(removeGameFromWishlist(e));
         }
       });
-    setIsWishlistUpdated(true);
+    setIsWishlistUpdated(!isWishlistUpdated);
   };
 
   const moveGameToCart = async (e) => {

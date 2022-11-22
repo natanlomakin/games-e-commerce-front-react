@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { SERVER_URL } from "../utils/serverUtil";
 import { updateAccessToken } from "../utils/updateAccessToken";
 import "../static/css/cart.css";
@@ -14,6 +14,10 @@ const Cart = () => {
 
   useEffect(() => {
     setTotalPrice(0.0);
+    /**
+     * It gets the user's cart details from the server and sets the state of the cartDetails variable
+     * to the result.
+     */
     const cartData = async () => {
       const resultCart = await axios(SERVER_URL + "/cart/getusercartgames/", {
         headers: {
@@ -22,8 +26,6 @@ const Cart = () => {
         Accept: "application/json",
         "Content-Type": "application/json",
       }).catch((error) => {
-        console.log(error.response.status);
-
         if (error.response.status === 401) {
           updateAccessToken(cartData);
         }
@@ -37,6 +39,10 @@ const Cart = () => {
     setIscartUpdated(false);
     let total = 0.0;
     const resultGame = [];
+    /**
+     * It loops through the games in the user cart, and for each game, it makes an API call to get more
+     * data, and then calculates the total price and sets it to totalPrice variable.
+     */
     const gameData = async () => {
       for (let i = 0; i < cartDetails.length; i++) {
         resultGame.push(
@@ -48,10 +54,13 @@ const Cart = () => {
       }
       setCartGameDetails(resultGame);
     };
-
     gameData();
   }, [cartDetails]);
 
+  /**
+   * It removes a game from the cart.
+   * @param e - the event that is triggered when the button is clicked
+   */
   const removeGameFromCart = async (e) => {
     const result = await axios
       .delete(SERVER_URL + "/cart/deletefromcart/" + e.target.value, {
@@ -62,15 +71,18 @@ const Cart = () => {
         "Content-Type": "application/json",
       })
       .catch((error) => {
-        console.log(error.response.status);
-
         if (error.response.status === 401) {
           updateAccessToken(removeGameFromCart(e));
         }
       });
-    setIscartUpdated(true);
+    setIscartUpdated(!iscartUpdated);
   };
 
+  /**
+   * It creates a new wishlist row in the DB, then calls another function to remove the game from the
+   * cart.
+   * @param e - the event that is passed to the function
+   */
   const moveGameToWishlist = async (e) => {
     const result = await axios
       .post(
@@ -88,18 +100,20 @@ const Cart = () => {
         }
       )
       .catch((error) => {
-        console.log(error.response.status);
-
         if (error.response.status === 401) {
           updateAccessToken(moveGameToWishlist(e));
         }
       })
       .then(removeGameFromCart(e));
-    console.log(result);
   };
 
+  /**
+   * It creates a new order row in the DB according to the cartDetails,
+   * then it sends the same cartDetails to the remove cart function,
+   * to remove the relevent cart rows in the DB.
+   * </code>
+   */
   const checkout = async () => {
-    console.log();
     for (let i = 0; i < cartDetails.length; i++) {
       const response = await axios
         .post(
@@ -119,7 +133,6 @@ const Cart = () => {
           }
         )
         .catch((error) => {
-          console.log(error);
           if (error.response.status === 401) {
             updateAccessToken();
           }
@@ -129,25 +142,24 @@ const Cart = () => {
     }
   };
 
+  /**
+   * It's a function that removes a game from the cart after the user has checked out.
+   * @param gamesList - an array of objects that contain the game details.
+   */
   const removeGameAfterCheckout = async (gamesList) => {
     for (let i = 0; i < gamesList.length; i++) {
-      const result = await axios
-        .delete(SERVER_URL + "/cart/deletefromcart/" + gamesList[i].game, {
+      const result = await axios.delete(
+        SERVER_URL + "/cart/deletefromcart/" + gamesList[i].game,
+        {
           headers: {
             authorization: "Bearer " + localStorage.getItem("access-token"),
           },
           Accept: "application/json",
           "Content-Type": "application/json",
-        })
-        .catch((error) => {
-          console.log(error.response.status);
-
-          /*  if (error.response.status === 401) {
-            updateAccessToken(removeGameFromCart(e));
-          } */
-        });
+        }
+      );
     }
-    setIscartUpdated(true);
+    setIscartUpdated(!iscartUpdated);
   };
 
   return (

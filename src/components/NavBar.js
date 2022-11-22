@@ -10,6 +10,10 @@ const NavBar = () => {
   const [LoggedInDisplay, setLoggedInDisplay] = useState(null);
   const [profilePicture, setProfilePicture] = useState("");
 
+  /**
+   * It removes the access-token, refresh-token,and user from localStorage,
+   * after the user logs out.
+   */
   const logoutHandle = () => {
     localStorage.removeItem("access-token");
     localStorage.removeItem("refresh-token");
@@ -19,6 +23,11 @@ const NavBar = () => {
 
   useEffect(() => {
     setIsAuthenticated(localStorage.getItem("access-token"));
+    /**
+     * It's a function that makes a request to the server to get the user profile, and if the request is successful, it
+     * sets the profile picture to the image returned by the server. If the request fails,
+     * it sets the profile picture to a default image.
+     */
     const userProfile = async () => {
       const result = await axios(SERVER_URL + "/userprofile/getuserprofile/", {
         headers: {
@@ -31,7 +40,6 @@ const NavBar = () => {
           "https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png"
         )
       );
-      console.log(result.data.profilePicture);
       setProfilePicture(SERVER_URL + result.data.profilePicture);
     };
     localStorage.getItem("access-token")

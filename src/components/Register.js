@@ -11,6 +11,10 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
+  /**
+   * When the user clicks the register button, the function will send a post request to the server with
+   * the user's information, and then redirect the user to the login page.
+   */
   const registerHandle = async () => {
     const response = await axios
       .post(SERVER_URL + "/register/register/", {

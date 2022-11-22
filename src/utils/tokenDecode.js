@@ -1,3 +1,8 @@
+/**
+ * It takes a JWT token and returns the decoded payload.
+ * @param token - The JWT token that you want to parse.
+ * @returns The token is being parsed and the payload is being returned.
+ */
 export const parseJwt = (token) => {
   if (!token) {
     return;

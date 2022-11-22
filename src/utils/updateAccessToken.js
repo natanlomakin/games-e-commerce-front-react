@@ -1,6 +1,11 @@
 import axios from "axios";
 import { SERVER_URL } from "./serverUtil";
 
+/**
+ * It takes a callback function as an argument, and then calls that callback function after it has
+ * updated the access token.
+ * @param callbackRefreshed - This is a function that is called after the access token is refreshed.
+ */
 export const updateAccessToken = async (callbackRefreshed) => {
   await axios
     .post(
