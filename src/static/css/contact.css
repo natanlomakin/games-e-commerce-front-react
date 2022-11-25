@@ -20,10 +20,6 @@
     flex: 50%;
 }
 
-.contact-form-inputs{
-    
-}
-
 .contact-form-single-input{
     padding-bottom: 2rem;
 }
@@ -41,12 +37,39 @@
     color:#ed1c24;
 }
 
+.after-submit{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+
+
+.after-submit-links{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
 @media (max-width: 800px){
     .contact-container{
         flex-direction: column;
     }
+
     .contact-right{
         justify-content: center;
         padding: 0rem 2rem 0rem 2rem;
+    }
+
+    .after-submit{
+        align-items: center;
+    }
+
+    .after-submit-links{
+        align-items: center;
+    }
+
+    .after-submit-message{
+        text-align: center;
     }
 }

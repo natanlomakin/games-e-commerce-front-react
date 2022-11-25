@@ -16,22 +16,23 @@ const Register = () => {
    * the user's information, and then redirect the user to the login page.
    */
   const registerHandle = async () => {
-    const response = await axios
-      .post(SERVER_URL + "/register/register/", {
-        username: username,
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        password: password,
-      })
-      .then((window.location.href = "/login"));
+    const response = await axios.post(SERVER_URL + "/register/register/", {
+      username: username,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      password: password,
+    });
+    window.location.href = "/login";
   };
 
   return (
     <div className="register-form-container">
       <div className="register-info">
         <form onSubmit={registerHandle}>
-          <h1>Register</h1>
+          <h1>
+            <span>Sign up</span>
+          </h1>
           <div>
             <label>First name: </label>
             <br />
@@ -56,6 +57,7 @@ const Register = () => {
             <label>Username: </label>
             <br />
             <input
+              required
               id="username"
               type="text"
               autoComplete={"false"}
@@ -66,6 +68,7 @@ const Register = () => {
             <label>Email: </label>
             <br />
             <input
+              required
               id="email"
               type={"email"}
               autoComplete={"false"}
@@ -76,6 +79,7 @@ const Register = () => {
             <label>Password: </label>
             <br />
             <input
+              required
               id="password"
               type={"password"}
               autoComplete={"false"}
@@ -88,7 +92,9 @@ const Register = () => {
               Login
             </NavLink>
           </p>
-          <button type="submit">Sign me up</button>
+          <div className="register-submit">
+            <button type="submit">Sign me up</button>
+          </div>
         </form>
       </div>
     </div>

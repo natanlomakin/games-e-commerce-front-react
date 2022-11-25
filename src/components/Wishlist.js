@@ -11,7 +11,8 @@ const Wishlist = () => {
   const [isWishlistUpdated, setIsWishlistUpdated] = useState(false);
 
   useEffect(() => {
-    setIsWishlistUpdated(!isWishlistUpdated);
+    console.log("second");
+    setIsWishlistUpdated(false);
     /**
      * It makes a request to the server to get the wishlist data of the user.
      */
@@ -27,13 +28,15 @@ const Wishlist = () => {
           updateAccessToken(wishlistData);
         }
       });
+      console.log("first");
       setWishlistDetails(result.data);
     };
     wishlistData();
   }, [isWishlistUpdated]);
 
   useEffect(() => {
-    setIsWishlistUpdated(!isWishlistUpdated);
+    console.log("third");
+    setIsWishlistUpdated(false);
     const result = [];
     /**
      * It loops through wishlistDetails which contains the game ids, and for each id, it pushes the result of an axios call

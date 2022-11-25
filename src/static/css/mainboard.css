@@ -74,6 +74,44 @@
     padding: 1rem;
 }
 
+.dropdown-filter-games{
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 10%;
+}
+
+.dropdown-filter-games-button{
+    background-color: #ed1c24;
+    padding:5px 5px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-filter-games-content{
+    display: none;
+    position: absolute;
+    margin: 1rem 0rem 0rem 12rem;
+    background-color: #ed1c24;
+    min-width: 160px;
+    box-shadow: 5px 8px 10px 0px rgba(0,0,0,1);
+    z-index: 1;
+    font-weight: bold;
+}
+
+.dropdown-filter-games-content a{
+    color: #f2f5ea;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+}
+
+.dropdown-filter-games:hover .dropdown-filter-games-content {
+    display: block;
+  }
+
 input:focus {
     background-color: rgb(190, 173, 230);
   }
@@ -94,7 +132,7 @@ a:link{
     padding: 0rem;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 800px) {
     .games-grid{
         display: flex;
         flex-direction: column;

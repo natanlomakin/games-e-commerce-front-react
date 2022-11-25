@@ -171,12 +171,18 @@ const Game = () => {
   return (
     <div className="game-container">
       <div className="game-images">
-        <img className="game-feature-image" src={feturedImage} alt=""></img>
+        <img
+          className="game-feature-image"
+          src={feturedImage}
+          alt=""
+          loading=" lazy"
+        ></img>
         <div className="game-caruosel">
           <img
             className="game-caruosel-images"
             src={SERVER_URL + game.imageOne}
             alt=""
+            loading=" lazy"
             onClick={(e) => setFeturedImage(e.target.src)}
           ></img>
 
@@ -184,24 +190,28 @@ const Game = () => {
             className="game-caruosel-images"
             src={SERVER_URL + game.imageTwo}
             alt=""
+            loading=" lazy"
             onClick={(e) => setFeturedImage(e.target.src)}
           ></img>
           <img
             className="game-caruosel-images"
             src={SERVER_URL + game.imageThree}
             alt=""
+            loading=" lazy"
             onClick={(e) => setFeturedImage(e.target.src)}
           ></img>
           <img
             className="game-caruosel-images"
             src={SERVER_URL + game.imageFour}
             alt=""
+            loading=" lazy"
             onClick={(e) => setFeturedImage(e.target.src)}
           ></img>
           <img
             className="game-caruosel-images"
             src={SERVER_URL + game.imageFive}
             alt=""
+            loading=" lazy"
             onClick={(e) => setFeturedImage(e.target.src)}
           ></img>
         </div>
@@ -287,10 +297,15 @@ const Game = () => {
               </div>
             )}
             <div className="game-buttons">
-              <button className={cartButtonState} onClick={isGameInCart}>
+              <button
+                type="submit"
+                className={cartButtonState}
+                onClick={isGameInCart}
+              >
                 {cartButtonContent}
               </button>{" "}
               <button
+                type="submit"
                 className={wishlistButtonState}
                 onClick={isGameInWishlist}
               >

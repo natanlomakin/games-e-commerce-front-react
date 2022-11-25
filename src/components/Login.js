@@ -29,8 +29,8 @@ const Login = () => {
         localStorage.setItem("access-token", response.data.access);
         localStorage.setItem("refresh-token", response.data.refresh);
         localStorage.setItem("user", parseJwt(response.data.access).user_id);
-        window.location.href = "/mainboard";
       });
+    window.location.href = "/mainboard";
   };
 
   return (

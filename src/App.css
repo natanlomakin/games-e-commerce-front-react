@@ -16,6 +16,16 @@
   pointer-events: none;
 }
 
+.navigation-link{
+  color: #f2f5ea;
+  text-decoration: none;
+}
+
+.navigation-link:hover{
+  color: #ed1c24;
+  transition: .3s;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

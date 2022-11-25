@@ -7,6 +7,8 @@ import "../static/css/mainboard.css";
 const MainBoard = () => {
   const [games, setGames] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [filterGamesBy, setFilterGamesBy] = useState("");
+  const [generes, setGeneres] = useState([]);
 
   useEffect(() => {
     /**
@@ -20,9 +22,25 @@ const MainBoard = () => {
         : await axios(SERVER_URL + "/game/allthegames/");
       setGames(result.data);
     };
-
     server_data();
   }, [searchValue]);
+
+  /* A for loop that is iterating through the games array and pushing the genre of each game into the
+  generes array. */
+  for (let i = 0; i < games.length; i++) {
+    if (!generes.includes(games[i].genre)) {
+      generes.push(games[i].genre);
+    }
+  }
+
+  /**
+   * When the user selects a genre, the value of is passed to the function,
+   * which then updates the state of the filterGamesBy variable.
+   * @param e - the genre value
+   */
+  const handleFilterGames = (e) => {
+    setFilterGamesBy(e);
+  };
 
   /**
    * It takes the value of the search input and sends it to the server, which then returns a list of
@@ -34,6 +52,17 @@ const MainBoard = () => {
 
   return (
     <div className="mainBoardContainer">
+      <div className="dropdown-filter-games">
+        <button className="dropdown-filter-games-button">Filter by</button>
+        <div className="dropdown-filter-games-content">
+          <a onClick={() => handleFilterGames("")}>None</a>
+          {generes.map((genre, ind) => (
+            <a onClick={() => handleFilterGames(genre)} key={ind}>
+              {genre}
+            </a>
+          ))}
+        </div>
+      </div>
       <div className="search-box">
         <form onSubmit={searchHandle}>
           <h3>
@@ -50,20 +79,57 @@ const MainBoard = () => {
         </form>
       </div>
       <div className="games-grid">
-        {games.map((game, ind) => (
-          <NavLink key={ind} to={"/game/" + game._id} className="card stacked">
-            <img
-              src={SERVER_URL + game.imageOne}
-              alt=""
-              className="card__img"
-            ></img>
-            <h4 className="card__badge">{game.genre}</h4>
-            <div className="card__content">
-              <h2 className="card__title">{game.title}</h2>
-              <p className="card__price">{game.price}$</p>
-            </div>
-          </NavLink>
-        ))}
+        {games && filterGamesBy
+          ? games
+              .filter((game) => {
+                let countGenres = 0;
+                if (game.genre === filterGamesBy) {
+                  countGenres++;
+                  if (countGenres > 0) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }
+              })
+              .map((game, ind) => (
+                <NavLink
+                  key={ind}
+                  loading=" lazy"
+                  to={"/game/" + game._id}
+                  className="card stacked"
+                >
+                  <img
+                    src={SERVER_URL + game.imageOne}
+                    alt=""
+                    className="card__img"
+                  ></img>
+                  <h4 className="card__badge">{game.genre}</h4>
+                  <div className="card__content">
+                    <h2 className="card__title">{game.title}</h2>
+                    <p className="card__price">{game.price}$</p>
+                  </div>
+                </NavLink>
+              ))
+          : games.map((game, ind) => (
+              <NavLink
+                key={ind}
+                loading=" lazy"
+                to={"/game/" + game._id}
+                className="card stacked"
+              >
+                <img
+                  src={SERVER_URL + game.imageOne}
+                  alt=""
+                  className="card__img"
+                ></img>
+                <h4 className="card__badge">{game.genre}</h4>
+                <div className="card__content">
+                  <h2 className="card__title">{game.title}</h2>
+                  <p className="card__price">{game.price}$</p>
+                </div>
+              </NavLink>
+            ))}
       </div>
     </div>
   );
