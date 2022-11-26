@@ -37,6 +37,18 @@ input{
     color: #ed1c24;
 }
 
+.after-submit{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.after-submit-links{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
 @media (max-width: 800px) {
     .register-info form > *{
         padding: .5rem;
