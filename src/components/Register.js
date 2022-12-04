@@ -18,20 +18,13 @@ const Register = () => {
    */
   const registerHandle = async (e) => {
     e.preventDefault();
-    const response = await axios
-      .post(SERVER_URL + "/register/register/", {
-        username: username,
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        password: password,
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .then((res) => {
-        console.log(res);
-      });
+    const response = await axios.post(SERVER_URL + "/register/register/", {
+      username: username,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      password: password,
+    });
     setIsRegisterd(true);
   };
 

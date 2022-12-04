@@ -4,12 +4,16 @@ import { NavLink } from "react-router-dom";
 import { SERVER_URL } from "../utils/serverUtil";
 import { parseJwt } from "../utils/tokenDecode";
 import "../static/css/register.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Flip } from "react-toastify";
 
 const Login = () => {
   const [username, setUsername] = useState("guest");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [Invalid, setInvalid] = useState(false);
+  const loginErrorToast = () =>
+    toast.error("Credentials are incorrect Please try again.");
 
   useEffect(() => {
     localStorage.getItem("access-token") && setIsLoggedIn(true);
@@ -23,7 +27,6 @@ const Login = () => {
    */
   const loginHandle = async (e) => {
     e.preventDefault();
-    setInvalid(false);
     let result = await axios
       .post(
         SERVER_URL + "/login/loginuser/",
@@ -34,7 +37,7 @@ const Login = () => {
         { "Content-Type": "application/json" }
       )
       .catch(() => {
-        setInvalid(true);
+        loginErrorToast();
       })
       .then((response) => {
         localStorage.setItem("access-token", response.data.access);
@@ -46,6 +49,7 @@ const Login = () => {
 
   return (
     <div className="register-form-container">
+      <ToastContainer limit={3} transition={Flip} />
       {isLoggedIn ? (
         <div className="after-submit">
           <div className="after-submit-message">
@@ -95,13 +99,6 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               ></input>
             </div>
-            {Invalid && (
-              <div className="modal">
-                <div className="modal-content">
-                  <span>One of the credentials is incorrect</span>
-                </div>
-              </div>
-            )}
             <p>
               Dont have an account?{" "}
               <NavLink className="register-or-login" to="/register">

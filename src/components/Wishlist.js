@@ -11,7 +11,6 @@ const Wishlist = () => {
   const [isWishlistUpdated, setIsWishlistUpdated] = useState(false);
 
   useEffect(() => {
-    console.log("second");
     setIsWishlistUpdated(false);
     /**
      * It makes a request to the server to get the wishlist data of the user.
@@ -28,14 +27,12 @@ const Wishlist = () => {
           updateAccessToken(wishlistData);
         }
       });
-      console.log("first");
       setWishlistDetails(result.data);
     };
     wishlistData();
   }, [isWishlistUpdated]);
 
   useEffect(() => {
-    console.log("third");
     setIsWishlistUpdated(false);
     const result = [];
     /**
@@ -63,7 +60,6 @@ const Wishlist = () => {
    *            the game id to remove
    */
   const removeGameFromWishlist = async (e) => {
-    console.log(e.target);
     const result = await axios
       .delete(
         SERVER_URL + "/wishlist/deltefromuserwishlist/" + e.target.value,
@@ -76,8 +72,6 @@ const Wishlist = () => {
         }
       )
       .catch((error) => {
-        console.log(error.response.status);
-
         if (error.response.status === 401) {
           updateAccessToken(removeGameFromWishlist(e));
         }
@@ -108,8 +102,6 @@ const Wishlist = () => {
         }
       )
       .catch((error) => {
-        console.log(error.response.status);
-
         if (error.response.status === 401) {
           updateAccessToken(moveGameToCart(e));
         }

@@ -1,113 +1,111 @@
-.game-container{
-    max-width: 100rem;
-    margin-inline: auto;
-    padding-inline: 2rem;
-    display: flex;
+.game-container {
+  max-width: 100rem;
+  margin-inline: auto;
+  padding-inline: 2rem;
+  display: flex;
 }
 
-.game-images{
-    display: flex;
-    flex: 70%;
-    padding: 3rem;
-    gap: 2rem 2rem;
-    flex-flow:  column;
-    justify-content: center;
+.game-images {
+  display: flex;
+  flex: 70%;
+  padding: 3rem;
+  gap: 2rem 2rem;
+  flex-flow: column;
+  justify-content: center;
 }
 
-.game-feature-image{
-    object-fit: cover;
-    max-width: 100%;
-    border-radius: 2%;
+.game-feature-image {
+  object-fit: cover;
+  max-width: 100%;
+  border-radius: 2%;
 }
 
-.game-details >*{
-    margin: 0.25rem;
-    padding: .5rem;
-    color: #f2f5ea;
+.game-details > * {
+  margin: 0.25rem;
+  padding: 0.5rem;
+  color: #f2f5ea;
 }
 
-.game-information{
-    display: flex;
-    flex: 30%;
-    flex-flow:  column;
-    padding-top: 2rem;
+.game-information {
+  display: flex;
+  flex: 30%;
+  flex-flow: column;
+  padding-top: 2rem;
 }
 
-.game-specs >*{
-    padding: .5rem;
-    color: #f2f5ea;
-    padding-left: 0rem;
+.game-specs > * {
+  padding: 0.5rem;
+  color: #f2f5ea;
+  padding-left: 0rem;
 }
 
-.game-caruosel{
-    display: flex;
-    max-width: 20%;
-    gap: .25rem ;
+.game-caruosel {
+  display: flex;
+  max-width: 20%;
+  gap: 0.25rem;
 }
 
-.game-buttons{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 10%;
-    padding: 1rem;
-    
+.game-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10%;
+  padding: 1rem;
 }
 
-.game-cart-button-block{
-    pointer-events: none;
-    color: black;
+.game-cart-button-block {
+  pointer-events: none;
+  color: black;
 }
 
-.game-wishlist-button-block{
-    pointer-events: none;
-    color: black;
+.game-wishlist-button-block {
+  pointer-events: none;
+  color: black;
 }
 
-.game-caruosel-images{
-    aspect-ratio: 2 / 1;
-    object-fit: cover;
-    max-width: 100%;
-    border-radius: 2%;
+.game-caruosel-images {
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  max-width: 100%;
+  border-radius: 2%;
 }
 
-.game-caruosel-images:hover{
-    border-color: #ed1c24;
-    border-style: double;
+.game-caruosel-images:hover {
+  border-color: #ed1c24;
+  border-style: double;
 }
 
-.modal{
-    
-    margin: 10px;
-    animation: hideAnimation 0s ease-in 3s;
-    animation-fill-mode: forwards;
-    color: #f2f5ea;
-    font-weight: bold;
+.modal {
+  margin: 10px;
+  animation: hideAnimation 0s ease-in 3s;
+  animation-fill-mode: forwards;
+  color: #f2f5ea;
+  font-weight: bold;
 }
 
 @media (max-width: 850px) {
-    .game-images {
-      flex: 100%;
-      padding: 1rem;
-    }
-    .game-information{
-        flex: 100%;
-        padding-top: 0;
-    }
-    .game-container{
-        flex-flow: column;
-    }
-    .game-buttons{
-        flex-direction: column;
-        gap: 2rem;
-        flex-flow: wrap;
-    }
+  .game-images {
+    flex: 100%;
+    padding: 0.1rem;
+  }
+  .game-information {
+    flex: 100%;
+    padding-top: 0;
+  }
+  .game-container {
+    flex-flow: column;
+  }
+  .game-buttons {
+    flex-direction: column;
+    gap: 2rem;
+    flex-flow: wrap;
+  }
 }
 
 @keyframes hideAnimation {
-    to {
-      visibility: hidden;
-      width: 0;
-      height: 0;
-    }
+  to {
+    visibility: hidden;
+    width: 0;
+    height: 0;
   }
+}

@@ -4,6 +4,9 @@ import axios from "axios";
 import { SERVER_URL } from "../utils/serverUtil";
 import "../static/css/game.css";
 import { updateAccessToken } from "../utils/updateAccessToken";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Flip } from "react-toastify";
 
 const Game = () => {
   const [game, setGame] = useState("");
@@ -20,6 +23,13 @@ const Game = () => {
   const [wishlistModal, setWishlistModal] = useState(false);
   const [canAddGameToCart, setCanAddGameToCart] = useState(true);
   const [canAddGameToWishlist, setcanAddGameToWishlist] = useState(true);
+
+  const loginNeededToast = () => toast.error("Please log in");
+  const gameInWishlistToast = () => toast.warning("Game alredy in wishlist");
+  const gameInCartToast = () => toast.warning("Game alredy in cart");
+  const addedSuccessfullyCartToast = () => toast.success("Game added to cart");
+  const addedSuccessfullyWishlistToast = () =>
+    toast.success("Game added to wishlist");
 
   useEffect(() => {
     const server_data = async () => {
@@ -40,6 +50,7 @@ const Game = () => {
       "Content-Type": "application/json",
     }).catch((error) => {
       if (error.response.status === 401) {
+        loginNeededToast();
         updateAccessToken(isGameInCart);
       }
     });
@@ -65,6 +76,7 @@ const Game = () => {
 
     for (let i = 0; i < wishlistResult.data.length; i++) {
       if (wishlistResult.data[i].game === game._id) {
+        gameInWishlistToast();
         setCanAddGameToCart(false);
         return;
       }
@@ -76,7 +88,6 @@ const Game = () => {
   };
 
   const addGameToCart = async () => {
-    console.log("Bearer " + localStorage.getItem("access-token"));
     const result = await axios.post(
       SERVER_URL + "/cart/addgametousercart/",
       {
@@ -91,7 +102,7 @@ const Game = () => {
         "Content-Type": "application/json",
       }
     );
-
+    addedSuccessfullyCartToast();
     setCartModal(true);
   };
 
@@ -106,9 +117,8 @@ const Game = () => {
         "Content-Type": "application/json",
       }
     ).catch((error) => {
-      console.log(error.response.status);
-
       if (error.response.status === 401) {
+        loginNeededToast();
         updateAccessToken(isGameInWishlist);
       }
     });
@@ -132,6 +142,7 @@ const Game = () => {
 
     for (let i = 0; i < cartResult.data.length; i++) {
       if (cartResult.data[i].game === game._id) {
+        gameInCartToast();
         setcanAddGameToWishlist(false);
         return;
       }
@@ -157,20 +168,14 @@ const Game = () => {
         "Content-Type": "application/json",
       }
     );
+    addedSuccessfullyWishlistToast();
     setWishlistModal(true);
-  };
-
-  const toggleCartModal = () => {
-    setCartModal(!cartModal);
-  };
-
-  const toggleWishlistModal = () => {
-    setWishlistModal(!wishlistModal);
   };
 
   return (
     <div className="game-container">
       <div className="game-images">
+        <ToastContainer limit={3} transition={Flip} />
         <img
           className="game-feature-image"
           src={feturedImage}
@@ -264,38 +269,6 @@ const Game = () => {
                 <span>Memory:</span> {game.memory}
               </h4>
             </div>
-            {cartModal && (
-              <div className="modal">
-                <div className="modal-content">
-                  Game succesfully added to cart
-                  <span>
-                    <i
-                      type="button"
-                      className="material-icons"
-                      onClick={toggleCartModal}
-                    >
-                      close
-                    </i>
-                  </span>
-                </div>
-              </div>
-            )}
-            {wishlistModal && (
-              <div className="modal">
-                <div className="modal-content">
-                  Game succesfully added to wishlist
-                  <span>
-                    <i
-                      type="button"
-                      className="material-icons"
-                      onClick={toggleWishlistModal}
-                    >
-                      close
-                    </i>
-                  </span>
-                </div>
-              </div>
-            )}
             <div className="game-buttons">
               <button
                 type="submit"

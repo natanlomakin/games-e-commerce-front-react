@@ -10,7 +10,7 @@ const Cart = () => {
   const [cartGameDetails, setCartGameDetails] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0.0);
   const [iscartUpdated, setIscartUpdated] = useState(false);
-  const [isGameInWishlist, setisGameInWishlist] = useState(false);
+  const [checkingOut, setCheckingOut] = useState(false);
 
   useEffect(() => {
     setTotalPrice(0.0);
@@ -114,6 +114,7 @@ const Cart = () => {
    * </code>
    */
   const checkout = async () => {
+    setCheckingOut(!checkingOut);
     for (let i = 0; i < cartDetails.length; i++) {
       const response = await axios
         .post(
@@ -213,6 +214,43 @@ const Cart = () => {
             CHECK OUT
           </button>
         </div>
+        {/* {checkingOut && (
+          <div className="checkout-info">
+            <form>
+              <label>First name</label>
+              <br />
+              <input></input>
+              <br />
+              <label>Last name</label>
+              <br />
+              <input></input>
+              <br />
+              <label>Email</label>
+              <br />
+              <input></input>
+              <br />
+              <label>Name on Card</label>
+              <br />
+              <input></input>
+              <br />
+              <label>Credit card number</label>
+              <br />
+              <input></input>
+              <br />
+              <label>Exp Month</label>
+              <br />
+              <input></input>
+              <br />
+              <label>Exp Year</label>
+              <br />
+              <input></input>
+              <br />
+              <label>CVV</label>
+              <br />
+              <input></input>
+            </form>
+          </div>
+        )} */}
       </div>
     </div>
   );

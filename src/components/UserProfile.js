@@ -69,10 +69,6 @@ const UserProfile = () => {
           "Content-Type": "application/json",
         },
       });
-      console.log(response.data);
-      /* if (response.data) {
-        
-      } */
       setOrders(response.data);
     };
     ordersData();
@@ -86,7 +82,6 @@ const UserProfile = () => {
   const handleCountry = (e) => {
     e.preventDefault();
     setCountry(e.target.value);
-    console.log(country);
   };
 
   const handleCity = (e) => {
@@ -120,8 +115,7 @@ const UserProfile = () => {
     form_data.append("zipCode", zipcode);
     form_data.append("dateOfBirth", dateOfBirth);
     form_data.append("user", localStorage.getItem("user"));
-    console.log(form_data);
-    console.log(SERVER_URL + "/userprofile/updateuserprofile/" + profileId);
+
     const response = await axios
       .put(
         SERVER_URL + "/userprofile/updateuserprofile/" + profileId,
@@ -134,7 +128,6 @@ const UserProfile = () => {
         }
       )
       .catch((error) => {
-        console.log(error);
         if (error.response.status === 401) {
           updateAccessToken(updateUserProfile(e));
         }
