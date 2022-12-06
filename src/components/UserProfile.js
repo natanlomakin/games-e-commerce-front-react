@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { SERVER_URL } from "../utils/serverUtil";
 import { updateAccessToken } from "../utils/updateAccessToken";
 import { parseJwt } from "../utils/tokenDecode";
@@ -273,6 +274,11 @@ const UserProfile = () => {
                         {order.total}
                         <i className="material-icons">attach_money</i>
                       </h3>
+                    </div>
+                    <div>
+                      <NavLink to={"/order/" + order._id}>
+                        <button>More details</button>
+                      </NavLink>
                     </div>
                   </div>
                 </div>

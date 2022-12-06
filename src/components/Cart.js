@@ -4,6 +4,10 @@ import { NavLink } from "react-router-dom";
 import { SERVER_URL } from "../utils/serverUtil";
 import { updateAccessToken } from "../utils/updateAccessToken";
 import "../static/css/cart.css";
+import { parseJwt } from "../utils/tokenDecode";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Flip } from "react-toastify";
 
 const Cart = () => {
   const [cartDetails, setCartDetails] = useState([]);
@@ -11,6 +15,14 @@ const Cart = () => {
   const [totalPrice, setTotalPrice] = useState(0.0);
   const [iscartUpdated, setIscartUpdated] = useState(false);
   const [checkingOut, setCheckingOut] = useState(false);
+  const [cardProvider, setCardProvider] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expirationMonth, setExpirationMonth] = useState("");
+  const [expirationYear, setExpirationYear] = useState("");
+  const [paymentId, setPaymentId] = useState(0);
+  const noGamesInCartToast = () => toast.error("Your cart is empty");
+
+  const user = parseJwt(localStorage.getItem("access-token"));
 
   useEffect(() => {
     setTotalPrice(0.0);
@@ -113,17 +125,41 @@ const Cart = () => {
    * to remove the relevent cart rows in the DB.
    * </code>
    */
-  const checkout = async () => {
-    setCheckingOut(!checkingOut);
+
+  const handlePaymentInformation = async (e) => {
+    e.preventDefault();
+    const response = await axios
+      .post(
+        SERVER_URL + "/payment/adduserpaymentdetails/",
+        {
+          user: localStorage.getItem("user"),
+          provider: cardProvider,
+          card_number: cardNumber,
+          expiration_month: expirationMonth,
+          expiration_year: expirationYear,
+        },
+        {
+          headers: {
+            authorization: "Bearer " + localStorage.getItem("access-token"),
+          },
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        }
+      )
+      .then((res) => setPaymentId(res.data._id));
+    cartDetails.length ? handleCheckoutForm() : noGamesInCartToast();
+  };
+
+  const handleCheckoutForm = async () => {
     for (let i = 0; i < cartDetails.length; i++) {
       const response = await axios
         .post(
           SERVER_URL + "/order/adduserorder/",
           {
             user: localStorage.getItem("user"),
-            cart: `${cartDetails[i]._id}`,
+            game: `${cartDetails[i].game}`,
             total: `${totalPrice}`,
-            payment: "2",
+            payment: paymentId,
           },
           {
             headers: {
@@ -138,9 +174,13 @@ const Cart = () => {
             updateAccessToken();
           }
         });
-
+      displayHideCheckoutForm();
       removeGameAfterCheckout(cartDetails);
     }
+  };
+
+  const displayHideCheckoutForm = () => {
+    setCheckingOut(!checkingOut);
   };
 
   /**
@@ -167,6 +207,7 @@ const Cart = () => {
     <div>
       <h1 className="cart-header">My Cart</h1>
       <div className="cart-container">
+        <ToastContainer limit={3} transition={Flip} />
         <div className="cart-game">
           {cartGameDetails.map((gameDetails, ind) => (
             <div key={ind} className="cart-game-card">
@@ -203,54 +244,125 @@ const Cart = () => {
             </div>
           ))}
         </div>
-        <div className="cart-order-information">
-          <h2>Summery</h2>
-          <h3>
-            <span>Total: </span>
-            {totalPrice}
-            <i className="material-icons">attach_money</i>
-          </h3>
-          <button value={cartGameDetails} onClick={checkout}>
-            CHECK OUT
-          </button>
-        </div>
-        {/* {checkingOut && (
-          <div className="checkout-info">
-            <form>
-              <label>First name</label>
-              <br />
-              <input></input>
-              <br />
-              <label>Last name</label>
-              <br />
-              <input></input>
-              <br />
-              <label>Email</label>
-              <br />
-              <input></input>
-              <br />
-              <label>Name on Card</label>
-              <br />
-              <input></input>
-              <br />
-              <label>Credit card number</label>
-              <br />
-              <input></input>
-              <br />
-              <label>Exp Month</label>
-              <br />
-              <input></input>
-              <br />
-              <label>Exp Year</label>
-              <br />
-              <input></input>
-              <br />
-              <label>CVV</label>
-              <br />
-              <input></input>
-            </form>
+        {checkingOut ? (
+          <div className="row">
+            <div className="col-75">
+              <div className="container">
+                <form onSubmit={handlePaymentInformation}>
+                  <div className="row">
+                    <div className="col-50">
+                      <h3>Billing Address</h3>
+                      <label for="fname">
+                        <i className="fa fa-user"></i> Full Name
+                      </label>
+                      <input
+                        value={user.first_name + " " + user.last_name}
+                        type="text"
+                        id="fname"
+                        placeholder="John M. Doe"
+                      />
+                      <label for="email">
+                        <i className="fa fa-envelope"></i> Email
+                      </label>
+                      <input
+                        value={user.email}
+                        type="text"
+                        id="email"
+                        placeholder="john@example.com"
+                      />
+                      <label for="adr">
+                        <i className="fa fa-address-card-o"></i> Address
+                      </label>
+                      <input
+                        type="text"
+                        id="adr"
+                        placeholder="542 W. 15th Street"
+                      />
+                      <label for="city">
+                        <i className="fa fa-institution"></i> City
+                      </label>
+                      <input type="text" id="city" placeholder="New York" />
+                      <div className="row">
+                        <label for="state">State</label>
+                        <input type="text" id="state" placeholder="NY" />
+                        <label for="zip">Zip</label>
+                        <input type="text" id="zip" placeholder="10001" />
+                      </div>
+                    </div>
+                    <div className="col-50">
+                      <h3>Payment</h3>
+                      <label for="fname">Accepted Cards</label>
+                      <div className="icon-container">
+                        <i className="fa fa-cc-visa"></i>{" "}
+                        <i className="fa fa-cc-amex"></i>{" "}
+                        <i className="fa fa-cc-mastercard"></i>{" "}
+                        <i className="fa fa-cc-discover"></i>
+                      </div>
+                      <label for="cname">Provider</label>
+                      <input
+                        onChange={(e) => setCardProvider(e.target.value)}
+                        type="text"
+                        id="provider"
+                        placeholder="visa"
+                      />
+                      <label for="ccnum">Credit card number</label>
+                      <input
+                        onChange={(e) => setCardNumber(e.target.value)}
+                        type="text"
+                        id="ccnum"
+                        placeholder="1111-2222-3333-4444"
+                      />
+                      <label for="expmonth">Exp Month</label>
+                      <input
+                        onChange={(e) => setExpirationMonth(e.target.value)}
+                        type="text"
+                        id="expmonth"
+                        placeholder="09"
+                      />
+                      <div className="row">
+                        <label for="expyear">Exp Year</label>
+                        <input
+                          onChange={(e) => setExpirationYear(e.target.value)}
+                          type="text"
+                          id="expyear"
+                          placeholder="18"
+                        />
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="352" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="form-buttons">
+                    <button type="button" onClick={displayHideCheckoutForm}>
+                      Cancel
+                    </button>
+                    <div>
+                      <h2>
+                        <span>Total: </span>
+                        {totalPrice}
+                        <i className="material-icons">attach_money</i>
+                      </h2>
+                    </div>
+                    <button type="submit">Finish order</button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-        )} */}
+        ) : (
+          <div className="cart-order-information">
+            <h2>Summery</h2>
+            <h3>
+              <span>Total: </span>
+              {totalPrice}
+              <i className="material-icons">attach_money</i>
+            </h3>
+            <button value={cartGameDetails} onClick={displayHideCheckoutForm}>
+              CHECK OUT
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

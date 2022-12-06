@@ -1,36 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { SERVER_URL } from "../utils/serverUtil";
 import { updateAccessToken } from "../utils/updateAccessToken";
 import "../static/css/cart.css";
 
 const Order = () => {
   const [order, setOrder] = useState("");
-  const [cartDetails, setCartData] = useState("");
   const [gameDetails, setGameDetails] = useState("");
+  const [gameId, setGameId] = useState("");
   const { id } = useParams();
 
-  const cartData = async () => {
-    const response = await axios(SERVER_URL + "/cart/getusercartgames/", {
-      headers: {
-        authorization: "Bearer " + localStorage.getItem("access-token"),
-      },
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    }).catch((error) => {
-      if (error.response.status === 401) {
-        updateAccessToken(cartData);
-      }
-    });
-    setCartData(response.data);
-    gameData();
-  };
-
   const gameData = async () => {
-    const response = await axios(
-      SERVER_URL + "/game/singlegame/" + cartDetails.game
-    );
+    const response = await axios(SERVER_URL + "/game/singlegame/" + order.game);
     setGameDetails(response.data);
   };
 
@@ -39,13 +21,15 @@ const Order = () => {
       const response = await axios(SERVER_URL + "/order/singleorder/" + id, {
         headers: {
           authorization: "Bearer " + localStorage.getItem("access-token"),
-          Accept: "application/json",
-          "Content-Type": "application/json",
         },
+        Accept: "application/json",
+        "Content-Type": "application/json",
       });
       setOrder(response.data);
-      cartData();
+      await setGameId(response.data.game);
     };
+    orderData();
+    gameData();
   }, []);
 
   return (
@@ -73,16 +57,6 @@ const Order = () => {
                   <i className="material-icons">attach_money</i>
                 </h3>
               </div>
-              <button
-                className="remove-btn"
-                value={gameDetails._id}
-                onClick={removeGameFromWishlist}
-              >
-                Remove
-              </button>{" "}
-              <button value={gameDetails._id} onClick={moveGameToCart}>
-                Add to cart
-              </button>
             </div>
           </div>
         </div>

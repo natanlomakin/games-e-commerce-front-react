@@ -12,6 +12,7 @@ import Wishlist from "./components/Wishlist";
 import UserProfile from "./components/UserProfile";
 import HomePage from "./components/HomePage";
 import Contact from "./components/Contact";
+import Order from "./components/Order";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -28,6 +29,7 @@ root.render(
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/wishlist" element={<Wishlist />}></Route>
           <Route path="/profile" element={<UserProfile />}></Route>
+          <Route path="/order/:id" element={<Order />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

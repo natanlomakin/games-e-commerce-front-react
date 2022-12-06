@@ -41,6 +41,10 @@
     
 }
 
+.cart-game-card{
+    cursor: grab;
+}
+
 @media (max-width: 735px){
     .profile-container{
         flex-direction: column;

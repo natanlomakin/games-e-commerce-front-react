@@ -80,6 +80,52 @@
   color: #f2f5ea;
 }
 
+.row {
+  flex: 40%;
+  color: #f2f5ea;
+  display: flex;
+  flex-wrap: wrap;
+  margin: .5rem .1rem .5rem .1rem;
+}
+
+.col-50 {
+  flex: 50%;
+}
+
+.col-50{
+  padding: 0 1rem;
+}
+
+.container {
+  padding: 1rem .5rem 1rem .5rem;
+}
+
+input[type=text] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ed1c24;
+  border-radius: 3px;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.icon-container {
+  margin-bottom: 1rem;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.form-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+}
+
 @media (max-width: 800px) {
   .cart-game {
     flex: 100%;
