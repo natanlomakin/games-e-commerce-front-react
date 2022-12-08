@@ -21,6 +21,7 @@ const Cart = () => {
   const [expirationYear, setExpirationYear] = useState("");
   const [paymentId, setPaymentId] = useState(0);
   const noGamesInCartToast = () => toast.error("Your cart is empty");
+  const orderCompleteToast = () => toast.success("Thank you for ordering :)");
 
   const user = parseJwt(localStorage.getItem("access-token"));
 
@@ -120,12 +121,9 @@ const Cart = () => {
   };
 
   /**
-   * It creates a new order row in the DB according to the cartDetails,
-   * then it sends the same cartDetails to the remove cart function,
-   * to remove the relevent cart rows in the DB.
-   * </code>
+   * It takes the user's payment information and sends it to the server.
+   * @param e - the event
    */
-
   const handlePaymentInformation = async (e) => {
     e.preventDefault();
     const response = await axios
@@ -146,11 +144,19 @@ const Cart = () => {
           "Content-Type": "application/json",
         }
       )
-      .then((res) => setPaymentId(res.data._id));
-    cartDetails.length ? handleCheckoutForm() : noGamesInCartToast();
+      .then((res) => setTheCurrentPaymentId(res.data._id));
   };
 
-  const handleCheckoutForm = async () => {
+  /**
+   * If the cartDetails array has a length, then call the handleCheckoutForm function, otherwise call
+   * the noGamesInCartToast function.
+   * @param res - is the response from the server
+   */
+  const setTheCurrentPaymentId = async (res) => {
+    cartDetails.length ? await handleCheckoutForm(res) : noGamesInCartToast();
+  };
+
+  const handleCheckoutForm = async (payment) => {
     for (let i = 0; i < cartDetails.length; i++) {
       const response = await axios
         .post(
@@ -159,7 +165,7 @@ const Cart = () => {
             user: localStorage.getItem("user"),
             game: `${cartDetails[i].game}`,
             total: `${totalPrice}`,
-            payment: paymentId,
+            payment: payment,
           },
           {
             headers: {
@@ -175,6 +181,7 @@ const Cart = () => {
           }
         });
       displayHideCheckoutForm();
+      orderCompleteToast();
       removeGameAfterCheckout(cartDetails);
     }
   };
@@ -212,6 +219,7 @@ const Cart = () => {
           {cartGameDetails.map((gameDetails, ind) => (
             <div key={ind} className="cart-game-card">
               <img
+                loading=" lazy"
                 className="cart-game-image"
                 src={SERVER_URL + gameDetails.imageOne}
               ></img>

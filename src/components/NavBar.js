@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "../static/css/navbar.css";
 import axios from "axios";
 import { SERVER_URL } from "../utils/serverUtil";
@@ -7,7 +7,6 @@ import { SERVER_URL } from "../utils/serverUtil";
 const NavBar = () => {
   /* const isAuthenticated = localStorage.getItem("token"); */
   const [isAuthenticated, setIsAuthenticated] = useState(null);
-  const [LoggedInDisplay, setLoggedInDisplay] = useState(null);
   const [profilePicture, setProfilePicture] = useState("");
 
   /**
@@ -74,7 +73,7 @@ const NavBar = () => {
             {isAuthenticated ? (
               <div className="dropdown-content">
                 <NavLink to="/profile">Profile</NavLink>
-                <a onClick={logoutHandle}>Logout</a>
+                <NavLink onClick={logoutHandle}>Logout</NavLink>
                 <NavLink to="/wishlist">Wishlist</NavLink>
                 <NavLink to="/cart">Cart</NavLink>
               </div>

@@ -71,7 +71,7 @@ const Contact = () => {
               <div className="contact-form-single-input">
                 <label>Email:</label>
                 <br />
-                <input type="email" autoComplete={"false"} required></input>
+                <input type="text" autoComplete={"false"} required></input>
               </div>
               <div className="contact-form-single-input">
                 <label>Message:</label>

@@ -21,7 +21,7 @@
 }
 
 .contact-form-single-input{
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
 }
 
 .contact-form-send{
@@ -42,8 +42,6 @@
     flex-direction: column;
     gap: 2rem;
 }
-
-
 
 .after-submit-links{
     display: flex;

@@ -12,7 +12,6 @@ const UserProfile = () => {
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [profileData, setProfileData] = useState("");
   const [picture, setPicture] = useState(
     "https://www.nicepng.com/png/detail/933-9332131_profile-picture-default-png.png"
   );
@@ -27,6 +26,11 @@ const UserProfile = () => {
 
   useEffect(() => {
     setIsProfileBeingUpdated(false);
+    /**
+     * It makes a request to the server to get user profile data, if the server returns a 500 error, it sets the user details to the data from the JWT token.
+     * If the server returns a 401 error, it refreshes the
+     * token and then makes the request again.
+     */
     const profileData = async () => {
       const result = await axios(SERVER_URL + "/userprofile/getuserprofile/", {
         headers: {
@@ -46,6 +50,7 @@ const UserProfile = () => {
           updateAccessToken(profileData);
         }
       });
+
       setProfileId(result.data._id);
       setPicture(SERVER_URL + result.data.profilePicture);
       setCountry(result.data.country);
@@ -63,6 +68,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     const ordersData = async () => {
+      /* Getting the orders of the user. */
       const response = await axios(SERVER_URL + "/order/getuserorder/", {
         headers: {
           authorization: "Bearer " + localStorage.getItem("access-token"),
@@ -105,9 +111,14 @@ const UserProfile = () => {
     setDateOfBirth(e.target.value);
   };
 
+  /**
+   * It updates the user profile
+   * @param e - The event object.
+   */
   const updateUserProfile = async (e) => {
     e.preventDefault();
 
+    /* Creating a form data object and appending the data to it. */
     const form_data = new FormData();
     form_data.append("profilePicture", picture);
     form_data.append("country", country);
@@ -117,6 +128,7 @@ const UserProfile = () => {
     form_data.append("dateOfBirth", dateOfBirth);
     form_data.append("user", localStorage.getItem("user"));
 
+    /* Updating the user profile. */
     const response = await axios
       .put(
         SERVER_URL + "/userprofile/updateuserprofile/" + profileId,
@@ -138,7 +150,7 @@ const UserProfile = () => {
 
   return (
     <div className="profile-container">
-      <img className="user-profile-image" src={picture}></img>
+      <img className="user-profile-image" src={picture} alt=""></img>
       {isProfileBeingUpdated ? (
         <div className="profile-information">
           <form onSubmit={updateUserProfile}>
