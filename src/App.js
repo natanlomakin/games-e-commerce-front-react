@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/Footer";
@@ -9,7 +8,7 @@ function App() {
     <div className="App">
       <NavBar />
       <div className="content">
-      <Outlet />
+        <Outlet />
       </div>
       <Footer />
     </div>

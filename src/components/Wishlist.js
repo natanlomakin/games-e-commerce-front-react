@@ -119,6 +119,7 @@ const Wishlist = () => {
               <img
                 className="cart-game-image"
                 src={SERVER_URL + gameDetails.imageOne}
+                alt="none"
               ></img>
               <div className="cart-game-information">
                 <div className="cart-game-title">
