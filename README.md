@@ -10,7 +10,7 @@
   <p align="center">
     An online games store with the latest games.
     <br />
-    <a href="https://up-374ca.web.app/">View Demo</a>
+    <a href="https://oneup-client.onrender.com">View Demo</a>
     ·
     <a href="https://github.com/natanlomakin/games-e-commerce-back-django.git">Visit Backend</a>
     ·
@@ -49,12 +49,12 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://up-374ca.web.app/)
+[![Product Name Screen Shot][product-screenshot-home]](https://oneup-client.onrender.com)
 
 This project was created as part of my studies at john bryce.
 For my finals project i decided to develop an online games store, using the knowledge i have aquired.
 
-The frontend was built using ReactJS as the main Javascript framework, Axios for all server requests, and finally deployed on Railway.
+The frontend was built using ReactJS as the main Javascript framework, Axios for all server requests, and finally deployed on Render.
 
 <p align="right">(<a href="#about-the-project">back to top</a>)</p>
 
@@ -65,7 +65,7 @@ The frontend was built using ReactJS as the main Javascript framework, Axios for
 
 ### Deployed On
 
-- [![Firebase][firebase]][firebase-url]
+- [![Render][render]][render-url]
 
 <p align="right">(<a href="#about-the-project">back to top</a>)</p>
 
@@ -101,17 +101,17 @@ Make sure the following is installed.
 
 To fully experience the features of the site, it is recommended to sign up.
 
-1.  Register page [![Product Name Screen Shot][product-screenshot-register]](https://up-374ca.web.app/register)
+1.  Register page [![Product Name Screen Shot][product-screenshot-register]](https://oneup-client.onrender.com/register)
 
 After sign up, sign in to your new account.
 For signing in we use JWT token in order to identify and secure your acount.
 
-2. Login page [![Product Name Screen Shot][product-screenshot-login]](https://up-374ca.web.app/login)
+2. Login page [![Product Name Screen Shot][product-screenshot-login]](https://oneup-client.onrender.com/login)
 
 After signing in, explore the store page.
 The store contains all the available games, click on any game to get more information.
 
-3. Store page [![Product Name Screen Shot][product-screenshot-store]](https://up-374ca.web.app/mainboard)
+3. Store page [![Product Name Screen Shot][product-screenshot-store]](https://oneup-client.onrender.com/mainboard)
 
 - Search a game by name ![Product Name Screen Shot][product-screenshot-search]
 
@@ -121,15 +121,15 @@ When a game is chosen, it's page will be shown.
 the page contains different information including price, genre, description etc.
 If you like the game, it can be added to the cart, or, add it to the wishlist for future purchase.
 
-4. Game page [![Product Name Screen Shot][product-screenshot-game]](https://up-374ca.web.app/game/4)
+4. Game page [![Product Name Screen Shot][product-screenshot-game]](https://oneup-client.onrender.com/game/4)
 
 Once you chose the games you like to buy, head over to the cart.
 
-5. Cart page [![Product Name Screen Shot][product-screenshot-cart]](https://up-374ca.web.app/cart)
+5. Cart page [![Product Name Screen Shot][product-screenshot-cart]](https://oneup-client.onrender.com/cart)
 
 If you regret choosing a game, it can be removed, or, it can be moved to the wishlist for future purchase.
 
-- Wishlist [![Product Name Screen Shot][product-screenshot-wishlist]](https://up-374ca.web.app/wishlist)
+- Wishlist [![Product Name Screen Shot][product-screenshot-wishlist]](https://oneup-client.onrender.com/wishlist)
 
 Otherwise feel free to proceed to checkout and complete the order.
 
@@ -137,7 +137,7 @@ Otherwise feel free to proceed to checkout and complete the order.
 
 After completing the order, you can head over to the profile page, there you can see past orders (click on any order for more information), check your details and even update them.
 
-6. Profile page [![Product Name Screen Shot][product-screenshot-profile]](https://up-374ca.web.app/profile)
+6. Profile page [![Product Name Screen Shot][product-screenshot-profile]](https://oneup-client.onrender.com/profile)
 
 - Update Profile![Product Name Screen Shot][product-screenshot-updateprofile]
 
@@ -208,9 +208,9 @@ Resources i found helpful and would like to give credit to.
 [react-url]: https://reactjs.org/
 [railway]: https://img.shields.io/badge/Railway-35495E?style=for-the-badge&logo=railway&logoColor=white
 [railway-url]: https://railway.app/
-[firebase]: https://img.shields.io/badge/Firebase-35495E?style=for-the-badge&logo=firebase&logoColor=gold
-[firebase-url]: https://console.firebase.google.com/
-[product-screenshot]: assets/screenshot.png
+[render]: https://img.shields.io/badge/Render-35495E?style=for-the-badge&logo=render&logoColor=Turquoise
+[render-url]: https://dashboard.render.com/
+[product-screenshot-home]: assets/screenshot.png
 [product-screenshot-register]: assets/screenshotRegister.PNG
 [product-screenshot-login]: assets/screenshotLogin.PNG
 [product-screenshot-store]: assets/screenshotMainBoard.PNG
